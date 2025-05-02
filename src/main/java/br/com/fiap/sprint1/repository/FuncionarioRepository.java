@@ -10,35 +10,57 @@ import java.util.Optional;
 
 public interface FuncionarioRepository extends JpaRepository<Funcionario, Long> {
 
-    // Método para listar todos os funcionários (já herdado do JpaRepository)
+    // Métodos básicos (herdados)
     @Override
     List<Funcionario> findAll();
 
-    // Método para encontrar um funcionário por ID (já herdado do JpaRepository)
     @Override
     Optional<Funcionario> findById(Long id);
 
-    // Consulta JPQL para buscar funcionários por cargo
-    @Query("SELECT f FROM Funcionario f WHERE f.cargo.id = :idCargo")
-    List<Funcionario> findByCargo(@Param("idCargo") Long idCargo);
+    // Consultas por Cargo
+    @Query("SELECT f FROM Funcionario f WHERE f.cargo.idCargo = :idCargo")
+    List<Funcionario> findByCargoId(@Param("idCargo") Long idCargo);
 
-    // Consulta JPQL para buscar funcionários por setor (assumindo que Cargo tem um campo 'setor')
-    @Query("SELECT f FROM Funcionario f WHERE f.cargo.setor = :setor")
-    List<Funcionario> findBySetor(@Param("setor") String setor);
+    @Query("SELECT f FROM Funcionario f WHERE f.cargo.nomeCargo = :nomeCargo")
+    List<Funcionario> findByNomeCargo(@Param("nomeCargo") String nomeCargo);
 
-    // Consulta JPQL alternativa para buscar funcionários por setor (com JOIN explícito)
-    @Query("SELECT f FROM Funcionario f JOIN f.cargo c WHERE c.setor = :setor")
-    List<Funcionario> findBySetorComJoin(@Param("setor") String setor);
+    // Consultas por Patio
+    @Query("SELECT f FROM Funcionario f WHERE f.patio.id = :idPatio")
+    List<Funcionario> findByPatioId(@Param("idPatio") Long idPatio);
 
-    // Consulta nativa para buscar funcionários por setor
+    // Consultas por Setor (através do Patio)
+    @Query("SELECT f FROM Funcionario f JOIN f.patio p JOIN p.setores s WHERE s.idSetor = :idSetor")
+    List<Funcionario> findBySetorId(@Param("idSetor") Long idSetor);
+
+    @Query("SELECT f FROM Funcionario f JOIN f.patio p JOIN p.setores s WHERE s.tipoSetor = :tipoSetor")
+    List<Funcionario> findByTipoSetor(@Param("tipoSetor") String tipoSetor);
+
+    // Consultas nativas
     @Query(value = "SELECT f.* FROM tb_funcionario f " +
-            "INNER JOIN tb_cargo c ON f.cargo_id_cargo = c.id_cargo " +
-            "WHERE c.setor_cargo = :setor", nativeQuery = true)
-    List<Funcionario> findBySetorNative(@Param("setor") String setor);
+            "JOIN tb_cargo c ON f.cargo_id_cargo = c.id_cargo " +
+            "WHERE c.nome_cargo LIKE %:nomeCargo%", nativeQuery = true)
+    List<Funcionario> findByNomeCargoContaining(@Param("nomeCargo") String nomeCargo);
 
-    // Consulta derivada do Spring Data JPA para buscar por cargo
-    List<Funcionario> findByCargo_Id(Long cargoId);
+    @Query(value = "SELECT f.* FROM tb_funcionario f " +
+            "JOIN tb_patio p ON f.patio_id_patio = p.id_patio " +
+            "JOIN tb_setor s ON p.id_patio = s.patio_id_patio " +
+            "WHERE s.tipo_setor = :tipoSetor", nativeQuery = true)
+    List<Funcionario> findByTipoSetorNative(@Param("tipoSetor") String tipoSetor);
 
-    // Consulta derivada alternativa para buscar por setor (se o relacionamento estiver configurado)
-    List<Funcionario> findByCargo_Setor(String setor);
+    // Consultas derivadas
+    List<Funcionario> findByNomeFuncionarioContainingIgnoreCase(String nome);
+
+    List<Funcionario> findByTelefoneFuncionarioStartingWith(String ddd);
+
+    // Consulta para funcionários com nome específico e cargo específico
+    @Query("SELECT f FROM Funcionario f WHERE f.nomeFuncionario = :nome AND f.cargo.nomeCargo = :cargo")
+    List<Funcionario> findByNomeAndCargo(@Param("nome") String nome, @Param("cargo") String cargo);
+
+    // Consulta para contar funcionários por cargo
+    @Query("SELECT COUNT(f) FROM Funcionario f WHERE f.cargo.idCargo = :idCargo")
+    Long countByCargoId(@Param("idCargo") Long idCargo);
+
+    // Consulta para verificar existência por telefone
+    boolean existsByTelefoneFuncionario(String telefone);
+
 }
