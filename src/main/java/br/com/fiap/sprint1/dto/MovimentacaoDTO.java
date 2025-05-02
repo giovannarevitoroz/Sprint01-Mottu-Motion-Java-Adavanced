@@ -1,23 +1,67 @@
 package br.com.fiap.sprint1.dto;
 
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import br.com.fiap.sprint1.model.Moto;
+import br.com.fiap.sprint1.model.Vaga;
+import org.springframework.hateoas.RepresentationModel;
+
 import java.time.LocalDate;
 
-public record MovimentacaoDTO(
-        Long idMovimentacao,
+public class MovimentacaoDto extends RepresentationModel<MovimentacaoDto> {
 
-        @NotNull(message = "A data de entrada não pode ser nula.")
-        LocalDate dtEntrada,
+        private Long idMovimentacao;
+        private LocalDate dtEntrada;
+        private LocalDate dtSaida;
+        private String descricaoMovimentacao;
+        private Moto moto;
+        private Vaga vaga;
 
-        LocalDate dtSaida,
+        // Getters e Setters
 
-        @Size(max = 255, message = "A descrição da movimentação deve ter no máximo 255 caracteres.")
-        String descricaoMovimentacao,
+        public Long getIdMovimentacao() {
+                return idMovimentacao;
+        }
 
-        @NotNull(message = "A moto é obrigatória.")
-        Long motoId,
+        public void setIdMovimentacao(Long idMovimentacao) {
+                this.idMovimentacao = idMovimentacao;
+        }
 
-        @NotNull(message = "A vaga é obrigatória.")
-        Long vagaId
-) {}
+        public LocalDate getDtEntrada() {
+                return dtEntrada;
+        }
+
+        public void setDtEntrada(LocalDate dtEntrada) {
+                this.dtEntrada = dtEntrada;
+        }
+
+        public LocalDate getDtSaida() {
+                return dtSaida;
+        }
+
+        public void setDtSaida(LocalDate dtSaida) {
+                this.dtSaida = dtSaida;
+        }
+
+        public String getDescricaoMovimentacao() {
+                return descricaoMovimentacao;
+        }
+
+        public void setDescricaoMovimentacao(String descricaoMovimentacao) {
+                this.descricaoMovimentacao = descricaoMovimentacao;
+        }
+
+        public Moto getMoto() {
+                return moto;
+        }
+
+        public void setMoto(Moto moto) {
+                this.moto = moto;
+        }
+
+        public Vaga getVaga() {
+                return vaga;
+        }
+
+        public void setVaga(Vaga vaga) {
+                this.vaga = vaga;
+        }
+}
