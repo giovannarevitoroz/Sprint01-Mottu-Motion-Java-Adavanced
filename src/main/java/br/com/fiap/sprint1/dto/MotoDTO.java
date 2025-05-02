@@ -1,26 +1,64 @@
 package br.com.fiap.sprint1.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import br.com.fiap.sprint1.model.Cliente;
+import org.springframework.hateoas.RepresentationModel;
 
-public record MotoDTO(
-        Long idMoto,
+public class MotoDTO extends RepresentationModel<MotoDTO> {
 
-        @NotBlank(message = "A placa da moto não pode estar em branco.")
-        @Size(max = 7, message = "A placa da moto deve ter no máximo 7 caracteres.")
-        String placaMoto,
+        private Long idMoto;
+        private String modeloMoto;
+        private String placaMoto;
+        private String situacaoMoto;
+        private String chassiMoto;
+        private Cliente cliente;
 
-        @NotBlank(message = "O modelo da moto não pode estar em branco.")
-        @Size(max = 50, message = "O modelo da moto deve ter no máximo 50 caracteres.")
-        String modeloMoto,
+        // Getters e Setters
 
-        @NotBlank(message = "A situação da moto não pode estar em branco.")
-        String situacaoMoto,
+        public Long getIdMoto() {
+                return idMoto;
+        }
 
-        @NotBlank(message = "O chassi da moto não pode estar em branco.")
-        @Size(max = 17, message = "O chassi da moto deve ter no máximo 17 caracteres.")
-        String chassiMoto,
+        public void setIdMoto(Long idMoto) {
+                this.idMoto = idMoto;
+        }
 
-        Long clienteId // FK para Cliente
-) {}
+        public String getModeloMoto() {
+                return modeloMoto;
+        }
+
+        public void setModeloMoto(String modeloMoto) {
+                this.modeloMoto = modeloMoto;
+        }
+
+        public String getPlacaMoto() {
+                return placaMoto;
+        }
+
+        public void setPlacaMoto(String placaMoto) {
+                this.placaMoto = placaMoto;
+        }
+
+        public String getSituacaoMoto() {
+                return situacaoMoto;
+        }
+
+        public void setSituacaoMoto(String situacaoMoto) {
+                this.situacaoMoto = situacaoMoto;
+        }
+
+        public String getChassiMoto() {
+                return chassiMoto;
+        }
+
+        public void setChassiMoto(String chassiMoto) {
+                this.chassiMoto = chassiMoto;
+        }
+
+        public Cliente getCliente() {
+                return cliente;
+        }
+
+        public void setCliente(Cliente cliente) {
+                this.cliente = cliente;
+        }
+}

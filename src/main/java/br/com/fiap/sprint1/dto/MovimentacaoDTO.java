@@ -6,7 +6,7 @@ import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDate;
 
-public class MovimentacaoDto extends RepresentationModel<MovimentacaoDto> {
+public class MovimentacaoDTO extends RepresentationModel<MovimentacaoDTO> {
 
         private Long idMovimentacao;
         private LocalDate dtEntrada;
