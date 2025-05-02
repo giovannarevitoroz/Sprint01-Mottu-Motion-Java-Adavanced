@@ -1,18 +1,17 @@
 package br.com.fiap.sprint1.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.hateoas.RepresentationModel;
 
-public record PatioDTO(
-        Long idPatio,
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class PatioDTO extends RepresentationModel<PatioDTO> {
 
-        @NotBlank(message = "A localização do pátio não pode estar em branco.")
-        @Size(max = 100, message = "A localização do pátio deve ter no máximo 100 caracteres.")
-        String localizacaoPatio,
-
-        @NotBlank(message = "O nome do pátio não pode estar em branco.")
-        @Size(max = 100, message = "O nome do pátio deve ter no máximo 100 caracteres.")
-        String nomePatio,
-
-        String descricaoPatio
-) {}
+        private Long idPatio;
+        private String localizacaoPatio;
+        private String nomePatio;
+        private String descricaoPatio;
+}

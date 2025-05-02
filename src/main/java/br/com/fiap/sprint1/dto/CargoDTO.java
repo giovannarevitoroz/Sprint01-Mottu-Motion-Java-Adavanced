@@ -1,14 +1,50 @@
 package br.com.fiap.sprint1.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import org.springframework.hateoas.RepresentationModel;
 
-public record CargoDTO(
-        Long idCargo,
+@NoArgsConstructor
+@AllArgsConstructor
+public class CargoDTO extends RepresentationModel<CargoDTO> {
 
-        @NotBlank(message = "O nome do cargo não pode estar em branco.")
-        @Size(min = 1, max = 50, message = "O nome do cargo deve ter entre 1 e 50 caracteres.")
-        String nomeCargo,
+        private Long idCargo;
 
-        String descricaoCargo
-) {}
+        private String nomeCargo;
+
+        private String descricaoCargo;
+
+        public Long getIdCargo() {
+                return idCargo;
+        }
+
+        public void setIdCargo(Long idCargo) {
+                this.idCargo = idCargo;
+        }
+
+        public String getNomeCargo() {
+                return nomeCargo;
+        }
+
+        public void setNomeCargo(String nomeCargo) {
+                this.nomeCargo = nomeCargo;
+        }
+
+        public String getDescricaoCargo() {
+                return descricaoCargo;
+        }
+
+        public void setDescricaoCargo(String descricaoCargo) {
+                this.descricaoCargo = descricaoCargo;
+        }
+
+        @Override
+        public String toString() {
+                return "CargoDTO{" +
+                        "idCargo=" + idCargo +
+                        ", nomeCargo='" + nomeCargo + '\'' +
+                        ", descricaoCargo='" + descricaoCargo + '\'' +
+                        '}';
+        }
+}

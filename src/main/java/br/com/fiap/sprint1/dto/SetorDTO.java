@@ -1,23 +1,19 @@
 package br.com.fiap.sprint1.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.hateoas.RepresentationModel;
 
-public record SetorDTO(
-        Long idSetor,
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class SetorDTO extends RepresentationModel<SetorDTO> {
 
-        @NotBlank(message = "O tipo do setor não pode estar em branco.")
-        String tipoSetor,
-
-        @NotNull(message = "O total de vagas não pode ser nulo.")
-        Integer totalVagas,
-
-        @NotNull(message = "O número de vagas ocupadas não pode ser nulo.")
-        Integer vagasOcupadas,
-
-        @NotBlank(message = "O status do setor não pode estar em branco.")
-        String statusSetor,
-
-        @NotNull(message = "O pátio é obrigatório.")
-        Long patioId
-) {}
+        private Long idSetor;
+        private String tipoSetor;
+        private Integer totalVagas;
+        private Integer vagasOcupadas;
+        private String statusSetor;
+        private Long idPatio; // Referência simplificada para Patio
+}
