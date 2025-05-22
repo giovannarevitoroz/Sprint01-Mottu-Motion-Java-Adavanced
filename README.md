@@ -128,7 +128,7 @@ logging.level.org.springframework.cache=DEBUG
 ### 1️⃣ Clone o Repositório
 
 ```bash
-git clone https://github.com/giovannarevitoroz/mottu-mottion-java-advanced.git
+git clone [https://github.com/giovannarevitoroz/mottu-mottion-java-advanced.git](https://github.com/giovannarevitoroz/Sprint01-Mottu-Motion-Java-Adavanced.git)
 ```
 
 ### 2️⃣ Configure o Banco de Dados
