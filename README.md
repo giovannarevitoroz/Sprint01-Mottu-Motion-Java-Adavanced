@@ -2,7 +2,7 @@
 
 # 🚀 Mottu Mottion: Sistema Inteligente de Gestão de Pátios para Frota de Motos de Entregadores
 
-> Plataforma moderna com API RESTful para controle operacional e logístico das motocicletas da Mottu.
+> Plataforma moderna com API RESTful para controle operacional e logístico das motos da Mottu.
 
 **Mottu Mottion** é um sistema de gestão de pátios voltado para as motos utilizadas por entregadores parceiros da Mottu. Ele organiza o fluxo de entrada e saída, alocação de vagas, tempo de permanência e envia notificações automatizadas. A aplicação se comunica via API REST e pode ser acessada por interfaces web ou mobile.
 
