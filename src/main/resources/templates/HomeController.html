@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Mottu Mottion</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header>
+    <h1>🚀 Mottu Mottion</h1>
+    <p>Sistema de Gestão de Pátios da Mottu</p>
+</header>
+
+<main>
+    <section>
+        <h2>📋 Funcionalidades Principais</h2>
+        <nav>
+            <ul>
+                <li><a th:href="@{/clientes}">Cadastro de Clientes</a></li>
+                <li><a th:href="@{/motos}">Cadastro de Motos</a></li>
+                <li><a th:href="@{/patios}">Gerenciamento de Pátios</a></li>
+                <li><a th:href="@{/equipe}">Gestão de Equipe</a></li>
+            </ul>
+        </nav>
+    </section>
+
+    <section>
+        <h2>📊 Status Operacional</h2>
+        <p>Total de motos ativas: <span th:text="${totalMotos}">0</span></p>
+        <p>Vagas disponíveis: <span th:text="${vagasDisponiveis}">0</span></p>
+        <p>Notificações pendentes: <span th:text="${notificacoes}">0</span></p>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2025 Mottu - Todos os direitos reservados.</p>
+</footer>
+</body>
+</html>
