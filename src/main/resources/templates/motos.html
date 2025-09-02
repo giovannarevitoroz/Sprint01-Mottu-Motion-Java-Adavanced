@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Motos - Mottu Mottion</title>
+    <link rel="stylesheet" th:href="@{/css/motos.css}">
+</head>
+<body>
+<header>
+    <h1>Cadastro de Motos</h1>
+    <nav>
+        <a th:href="@{/}">Home</a> |
+        <a th:href="@{/clientes}">Cadastro de Clientes</a> |
+        <a th:href="@{/patios}">Gerenciamento de Pátios</a> |
+        <a th:href="@{/equipe}">Gestão de Equipe</a>
+    </nav>
+</header>
+
+<main>
+    <!-- Formulário -->
+    <section>
+        <h2 th:text="${moto.idMoto} != null ? 'Editar Moto' : 'Adicionar Moto'">Adicionar Moto</h2>
+        <form th:action="@{/motos}" th:object="${moto}" method="post">
+            <label for="modeloMoto">Modelo:</label>
+            <input type="text" id="modeloMoto" th:field="*{modeloMoto}" maxlength="50" required>
+
+            <label for="placaMoto">Placa:</label>
+            <input type="text" id="placaMoto" th:field="*{placaMoto}" maxlength="7" required>
+
+            <label for="situacaoMoto">Situação:</label>
+            <input type="text" id="situacaoMoto" th:field="*{situacaoMoto}" maxlength="50" required>
+
+            <label for="chassiMoto">Chassi:</label>
+            <input type="text" id="chassiMoto" th:field="*{chassiMoto}" maxlength="17" required>
+
+            <!-- Se MotoDTO tiver getCliente().getIdCliente() funcionando, use esse campo -->
+            <label for="cliente.idCliente">ID do Cliente:</label>
+            <input type="number" id="cliente.idCliente" th:field="*{cliente.idCliente}" required>
+
+            <input type="hidden" th:field="*{idMoto}" />
+            <button type="submit" th:text="${moto.idMoto} != null ? 'Atualizar' : 'Cadastrar'">Salvar</button>
+        </form>
+    </section>
+
+    <!-- Lista de motos -->
+    <section>
+        <h2>Motos Cadastradas</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Modelo</th>
+                <th>Placa</th>
+                <th>Situação</th>
+                <th>Chassi</th>
+                <th>ID Cliente</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="m : ${motos}">
+                <td th:text="${m.idMoto}">1</td>
+                <td th:text="${m.modeloMoto}">Modelo</td>
+                <td th:text="${m.placaMoto}">ABC1234</td>
+                <td th:text="${m.situacaoMoto}">Ativa</td>
+                <td th:text="${m.chassiMoto}">XYZ1234567890</td>
+                <td th:text="${m.cliente.idCliente}">1</td>
+                <td>
+                    <a th:href="@{'/motos/editar/' + ${m.idMoto}}">Editar</a> |
+                    <a th:href="@{'/motos/deletar/' + ${m.idMoto}}"
+                       onclick="return confirm('Deseja realmente deletar esta moto?')">Deletar</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+
+<!-- Popups -->
+<div th:if="${successMessage != null}" class="popup-success" th:text="${successMessage}"></div>
+<div th:if="${erro != null}" class="popup-error" th:text="${erro}"></div>
+
+<script>
+    setTimeout(() => {
+        document.querySelector('.popup-success')?.style.display = 'none';
+        document.querySelector('.popup-error')?.style.display = 'none';
+    }, 3000);
+</script>
+
+<footer>
+    <p>&copy; 2025 Mottu - Todos os direitos reservados.</p>
+</footer>
+</body>
+</html>
