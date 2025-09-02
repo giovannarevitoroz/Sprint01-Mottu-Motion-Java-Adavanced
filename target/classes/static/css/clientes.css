@@ -180,46 +180,46 @@ tr.deletado {
   transition: all 0.5s ease;
 }
 /* ==========================
-   PAGINAÇÃO
+   PAGINAÇÃO BONITA
 ========================== */
-.pagination {
+.paginacao {
   display: flex;
   justify-content: center;
   margin: 20px 0;
-  list-style: none;
-  padding: 0;
+  gap: 8px; /* espaçamento entre os botões */
 }
 
-.pagination li {
-  margin: 0 5px;
-}
-
-.pagination a {
-  display: block;
-  padding: 8px 12px;
+.paginacao a {
+  display: inline-block;
+  padding: 10px 16px;
   background-color: #2ac35f;
   color: #151414;
   font-weight: bold;
   text-decoration: none;
-  border-radius: 6px;
-  transition: 0.3s;
+  border-radius: 12px; /* cantos mais arredondados */
+  box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
 }
 
-.pagination a:hover {
+.paginacao a:hover {
   background-color: #00ff66;
+  transform: translateY(-2px); /* leve efeito de elevação */
 }
 
-.pagination .active a {
+.paginacao .ativo a {
   background-color: #00ff66;
   color: #151414;
   cursor: default;
+  box-shadow: 0 0 10px #00ff66; /* destaque no botão ativo */
 }
 
-.pagination .disabled a {
+.paginacao .disabled a {
   background-color: #555;
   color: #999;
   cursor: not-allowed;
+  box-shadow: none;
 }
+
 
 /* ==========================
    MENSAGENS DE SUCESSO / ERRO
