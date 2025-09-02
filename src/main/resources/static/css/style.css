@@ -1,0 +1,111 @@
+/* ==========================
+   RESET
+========================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* ==========================
+   FUNDO
+========================== */
+body {
+  background-color: #000;   /* fundo preto */
+  color: #fff;              /* texto branco */
+  line-height: 1.6;
+}
+
+/* ==========================
+   CABEÇALHO
+========================== */
+header {
+  background-color: #000;
+  padding: 25px;
+  text-align: center;
+  border-bottom: 1px solid #00ff66; /* verde */
+}
+
+header h1 {
+  color: #00ff66;
+  font-size: 2.3rem;
+  margin-bottom: 10px;
+}
+
+header p {
+  color: #aaa;
+  font-size: 1.1rem;
+}
+
+/* ==========================
+   SEÇÕES
+========================== */
+main {
+  padding: 40px;
+  text-align: center;
+}
+
+main section {
+  margin-bottom: 50px;
+}
+
+main h2 {
+  color: #00ff66;
+  margin-bottom: 25px;
+  font-size: 1.8rem;
+}
+
+/* ==========================
+   NAVEGAÇÃO
+========================== */
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 25px;
+}
+
+nav ul li a {
+  display: inline-block;
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  padding: 12px 20px;
+  border-radius: 10px;
+  background-color: #111;
+  border: 1px solid #00ff66;
+  transition: all 0.3s ease-in-out;
+}
+
+nav ul li a:hover {
+  background-color: #00ff66;
+  color: #000;
+}
+
+/* ==========================
+   STATUS OPERACIONAL
+========================== */
+section p {
+  margin: 12px 0;
+  font-size: 1.1rem;
+  color: #ccc;
+}
+
+section span {
+  color: #00ff66;
+  font-weight: bold;
+}
+
+/* ==========================
+   RODAPÉ
+========================== */
+footer {
+  background-color: #000;
+  color: #666;
+  text-align: center;
+  padding: 20px;
+  border-top: 1px solid #00ff66;
+  margin-top: 40px;
+}

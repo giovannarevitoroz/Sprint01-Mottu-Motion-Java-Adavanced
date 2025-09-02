@@ -7,25 +7,39 @@
 </head>
 <body>
 <header>
-    <h1>🚀 Mottu Mottion</h1>
+    <h1>Mottu Mottion</h1>
     <p>Sistema de Gestão de Pátios da Mottu</p>
 </header>
 
 <main>
     <section>
-        <h2>📋 Funcionalidades Principais</h2>
+        <h2>Funcionalidades Principais</h2>
         <nav>
             <ul>
+                <!-- Cadastro e gerenciamento -->
                 <li><a th:href="@{/clientes}">Cadastro de Clientes</a></li>
                 <li><a th:href="@{/motos}">Cadastro de Motos</a></li>
+
+                <!-- Pátios e estrutura -->
                 <li><a th:href="@{/patios}">Gerenciamento de Pátios</a></li>
+                <li><a th:href="@{/setores}">Setores</a></li>
+                <li><a th:href="@{/vagas}">Vagas</a></li>
+
+                <!-- Movimentações -->
+                <li><a th:href="@{/movimentacoes}">Movimentações</a></li>
+
+                <!-- Equipe -->
                 <li><a th:href="@{/equipe}">Gestão de Equipe</a></li>
+                <li><a th:href="@{/cargos}">Cargos</a></li>
+
+                <!-- Relatórios -->
+                <li><a th:href="@{/relatorios}">Relatórios</a></li>
             </ul>
         </nav>
     </section>
 
     <section>
-        <h2>📊 Status Operacional</h2>
+        <h2>Status Operacional</h2>
         <p>Total de motos ativas: <span th:text="${totalMotos}">0</span></p>
         <p>Vagas disponíveis: <span th:text="${vagasDisponiveis}">0</span></p>
         <p>Notificações pendentes: <span th:text="${notificacoes}">0</span></p>

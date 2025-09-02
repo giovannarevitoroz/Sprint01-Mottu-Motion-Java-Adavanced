@@ -45,7 +45,7 @@ public class Cliente {
 
     @NotNull(message = "O sexo do cliente não pode ser nulo.")
     @Size(max = 1, message = "O sexo do cliente deve conter apenas 1 caractere.")
-    @Column(name = "sexo_cliente", length = 1, nullable = false)
+    @Column(name = "sexo_cliente", length = 1, nullable = false,columnDefinition = "CHAR(1)")
     private String sexoCliente;
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)

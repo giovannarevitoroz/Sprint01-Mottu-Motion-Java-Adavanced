@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Clientes - Mottu Mottion</title>
+    <link rel="stylesheet" th:href="@{/css/clientes.css}">
+    <script>
+        function showPopup(msg) {
+            alert(msg);
+        }
+    </script>
+</head>
+<body>
+<header>
+    <h1>📋 Cadastro de Clientes</h1>
+    <nav>
+        <a th:href="@{/}">Home</a> |
+        <a th:href="@{/motos}">Cadastro de Motos</a> |
+        <a th:href="@{/patios}">Gerenciamento de Pátios</a> |
+        <a th:href="@{/equipe}">Gestão de Equipe</a>
+    </nav>
+</header>
+
+<main>
+    <!-- Formulário para adicionar ou editar -->
+    <section>
+        <h2 th:text="${cliente.idCliente} != null ? 'Editar Cliente' : 'Adicionar Cliente'">Adicionar Cliente</h2>
+        <form th:action="@{${cliente.idCliente} != null ? '/clientes/' + ${cliente.idCliente} : '/clientes'}"
+              th:object="${cliente}" method="post">
+            <label for="nomeCliente">Nome:</label>
+            <input type="text" id="nomeCliente" th:field="*{nomeCliente}" maxlength="100" required>
+
+            <label for="telefoneCliente">Telefone:</label>
+            <input type="text" id="telefoneCliente" th:field="*{telefoneCliente}" maxlength="11" required>
+
+            <label for="cpfCliente">CPF:</label>
+            <input type="text" id="cpfCliente" th:field="*{cpfCliente}" maxlength="11" required>
+
+            <label for="emailCliente">Email:</label>
+            <input type="email" id="emailCliente" th:field="*{emailCliente}" maxlength="100" required>
+
+            <label for="sexoCliente">Sexo:</label>
+            <select id="sexoCliente" th:field="*{sexoCliente}" required>
+                <option value="" disabled th:selected="*{sexoCliente} == null">Selecione</option>
+                <option value="M" th:selected="*{sexoCliente} == 'M'">Masculino</option>
+                <option value="F" th:selected="*{sexoCliente} == 'F'">Feminino</option>
+                <option value="O" th:selected="*{sexoCliente} == 'O'">Outro</option>
+            </select>
+
+            <input type="hidden" th:field="*{idCliente}" />
+            <button type="submit" th:text="${cliente.idCliente} != null ? 'Atualizar' : 'Cadastrar'">Salvar</button>
+        </form>
+    </section>
+
+    <!-- Lista de clientes -->
+    <section>
+        <h2>Clientes Cadastrados</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Telefone</th>
+                <th>CPF</th>
+                <th>Email</th>
+                <th>Sexo</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="cli : ${clientes.content}">
+                <td th:text="${cli.idCliente}">1</td>
+                <td th:text="${cli.nomeCliente}">Nome Cliente</td>
+                <td th:text="${cli.telefoneCliente}">123456789</td>
+                <td th:text="${cli.cpfCliente}">00011122233</td>
+                <td th:text="${cli.emailCliente}">email@exemplo.com</td>
+                <td th:text="${cli.sexoCliente}">M</td>
+                <td>
+                    <a th:href="@{'/clientes/editar/' + ${cli.idCliente}}">Editar</a> |
+                    <a th:href="@{'/clientes/deletar/' + ${cli.idCliente}}"
+                       onclick="return confirm('Deseja realmente deletar?')">Deletar</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- Paginação -->
+        <div class="paginacao">
+            <span th:each="i : ${#numbers.sequence(0, clientes.totalPages - 1)}">
+                <a th:href="@{'/clientes?page=' + ${i}}"
+                   th:text="${i + 1}"
+                   th:classappend="${clientes.number} == ${i} ? 'ativo' : ''">1</a>
+            </span>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2025 Mottu - Todos os direitos reservados.</p>
+</footer>
+
+<!-- Popup de sucesso -->
+<script th:if="${successMessage != null}">
+    showPopup([[${successMessage}]]);
+</script>
+</body>
+</html>
