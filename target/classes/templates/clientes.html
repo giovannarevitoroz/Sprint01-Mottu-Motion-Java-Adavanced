@@ -4,11 +4,6 @@
     <meta charset="UTF-8">
     <title>Cadastro de Clientes - Mottu Mottion</title>
     <link rel="stylesheet" th:href="@{/css/clientes.css}">
-    <script>
-        function showPopup(msg) {
-            alert(msg);
-        }
-    </script>
 </head>
 <body>
 <header>
@@ -95,13 +90,23 @@
     </section>
 </main>
 
+<!-- Popups de sucesso / erro -->
+<div th:if="${successMessage != null}" class="popup-success" th:text="${successMessage}"></div>
+<div th:if="${erro != null}" class="popup-error" th:text="${erro}"></div>
+
+<script>
+    // Fecha os popups automaticamente após 3 segundos
+    setTimeout(() => {
+        const success = document.querySelector('.popup-success');
+        if (success) success.style.display = 'none';
+
+        const error = document.querySelector('.popup-error');
+        if (error) error.style.display = 'none';
+    }, 3000);
+</script>
+
 <footer>
     <p>&copy; 2025 Mottu - Todos os direitos reservados.</p>
 </footer>
-
-<!-- Popup de sucesso -->
-<script th:if="${successMessage != null}">
-    showPopup([[${successMessage}]]);
-</script>
 </body>
 </html>

@@ -89,7 +89,7 @@ public class ClienteViewController {
                 redirectAttributes.addFlashAttribute("erro", erro);
             } else {
                 clienteService.cadastrar(clienteDTO);
-                redirectAttributes.addFlashAttribute("successMessage", "Usuário cadastrado com sucesso!");
+                redirectAttributes.addFlashAttribute("successMessage", "Cliente cadastrado com sucesso");
             }
 
         } catch (Exception e) {
@@ -129,7 +129,7 @@ public class ClienteViewController {
                 redirectAttributes.addFlashAttribute("erro", erro);
             } else {
                 clienteService.atualizarCliente(id, clienteDTO);
-                redirectAttributes.addFlashAttribute("successMessage", "Usuário editado com sucesso!");
+                redirectAttributes.addFlashAttribute("successMessage", "Cliente editado com sucesso!");
             }
 
         } catch (Exception e) {
