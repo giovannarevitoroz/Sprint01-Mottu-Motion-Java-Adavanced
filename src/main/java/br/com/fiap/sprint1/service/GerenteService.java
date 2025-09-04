@@ -30,7 +30,7 @@ public class GerenteService {
 		Gerente gerente = toEntity(gerenteDTO);
 		return toDTO(gerenteRepository.save(gerente));
 	}
-	
+
 	@Cacheable(value="gerentesAll")
 	public List<GerenteDTO> listarTodos() {
 		return gerenteRepository.findAll()

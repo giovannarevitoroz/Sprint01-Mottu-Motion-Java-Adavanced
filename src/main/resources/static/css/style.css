@@ -1,5 +1,5 @@
 /* ==========================
-   RESET
+   RESET GERAL
 ========================== */
 * {
   margin: 0;
@@ -9,11 +9,11 @@
 }
 
 /* ==========================
-   FUNDO
+   BODY
 ========================== */
 body {
-  background-color: #000;   /* fundo preto */
-  color: #fff;              /* texto branco */
+  background-color: #000;
+  color: #fff;
   line-height: 1.6;
 }
 
@@ -24,11 +24,11 @@ header {
   background-color: #000;
   padding: 25px;
   text-align: center;
-  border-bottom: 1px solid #00ff66; /* verde */
+  border-bottom: 2px solid #2ac35f;
 }
 
 header h1 {
-  color: #00ff66;
+  color: #2ac35f;
   font-size: 2.3rem;
   margin-bottom: 10px;
 }
@@ -38,26 +38,19 @@ header p {
   font-size: 1.1rem;
 }
 
-/* ==========================
-   SEÇÕES
-========================== */
-main {
-  padding: 40px;
-  text-align: center;
+header nav a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 10px;
+  font-weight: bold;
 }
 
-main section {
-  margin-bottom: 50px;
-}
-
-main h2 {
-  color: #00ff66;
-  margin-bottom: 25px;
-  font-size: 1.8rem;
+header nav a:hover {
+  color: #2ac35f;
 }
 
 /* ==========================
-   NAVEGAÇÃO
+   NAVEGAÇÃO COM LISTA
 ========================== */
 nav ul {
   list-style: none;
@@ -65,6 +58,7 @@ nav ul {
   justify-content: center;
   flex-wrap: wrap;
   gap: 25px;
+  margin-top: 15px;
 }
 
 nav ul li a {
@@ -85,8 +79,23 @@ nav ul li a:hover {
 }
 
 /* ==========================
-   STATUS OPERACIONAL
+   MAIN E SEÇÕES
 ========================== */
+main {
+  padding: 40px;
+  text-align: center;
+}
+
+main section {
+  margin-bottom: 50px;
+}
+
+main h2 {
+  color: #00ff66;
+  margin-bottom: 25px;
+  font-size: 1.8rem;
+}
+
 section p {
   margin: 12px 0;
   font-size: 1.1rem;
@@ -99,6 +108,199 @@ section span {
 }
 
 /* ==========================
+   FORMULÁRIOS
+========================== */
+form {
+  background-color: #1a1a1a;
+  border: 2px solid #2ac35f;
+  border-radius: 10px;
+  padding: 30px;
+  max-width: 700px;
+  margin: 20px auto;
+  text-align: left;
+}
+
+form label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+  color: #ccc;
+}
+
+form input,
+form select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #2ac35f;
+  border-radius: 6px;
+  background-color: #151414;
+  color: #fff;
+}
+
+form input:focus,
+form select:focus {
+  outline: none;
+  border-color: #00ff66;
+}
+
+form button {
+  background-color: #2ac35f;
+  border: none;
+  color: #151414;
+  font-weight: bold;
+  padding: 12px 25px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+form button:hover {
+  background-color: #00ff66;
+}
+
+/* ==========================
+   BOTÃO DE VOLTAR
+========================== */
+.btn-voltar {
+  display: inline-block;
+  margin-bottom: 20px;
+  padding: 10px 20px;
+  background-color: #2ac35f;
+  color: #151414;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.btn-voltar:hover {
+  background-color: #00ff66;
+}
+
+/* ==========================
+   TABELAS
+========================== */
+table {
+  width: 95%;
+  margin: 30px auto;
+  border-collapse: collapse;
+  background-color: #1a1a1a;
+  border: 2px solid #2ac35f;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+table th,
+table td {
+  padding: 12px 15px;
+  text-align: center;
+  border-bottom: 1px solid #2ac35f;
+}
+
+table th {
+  background-color: #151414;
+  color: #2ac35f;
+}
+
+table tr:hover {
+  background-color: #2c2c2c;
+}
+
+table a {
+  color: #2ac35f;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+table a:hover {
+  color: #00ff66;
+}
+
+/* ==========================
+   TABELA: EDIÇÃO / EXCLUSÃO
+========================== */
+tr.editado {
+  background-color: #2a2a2a;
+  border-left: 4px solid #00ff66;
+  transition: all 0.5s ease;
+}
+
+tr.deletado {
+  background-color: #3a1a1a;
+  color: #ff4d4d;
+  text-decoration: line-through;
+  transition: all 0.5s ease;
+}
+
+/* ==========================
+   PAGINAÇÃO
+========================== */
+.paginacao {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+  gap: 8px;
+}
+
+.paginacao a {
+  display: inline-block;
+  padding: 10px 16px;
+  background-color: #2ac35f;
+  color: #151414;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 12px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.paginacao a:hover {
+  background-color: #00ff66;
+  transform: translateY(-2px);
+}
+
+.paginacao .ativo a {
+  background-color: #00ff66;
+  color: #151414;
+  cursor: default;
+  box-shadow: 0 0 10px #00ff66;
+}
+
+.paginacao .disabled a {
+  background-color: #555;
+  color: #999;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ==========================
+   MENSAGENS DE SUCESSO / ERRO
+========================== */
+.popup-success,
+.popup-error {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 15px 25px;
+  border-radius: 8px;
+  font-weight: bold;
+  z-index: 1000;
+  box-shadow: 0 0 10px #000;
+  opacity: 0.95;
+}
+
+.popup-success {
+  background-color: #2ac35f;
+  color: #151414;
+}
+
+.popup-error {
+  background-color: #ff4d4d;
+  color: #fff;
+}
+
+/* ==========================
    RODAPÉ
 ========================== */
 footer {
@@ -106,6 +308,6 @@ footer {
   color: #666;
   text-align: center;
   padding: 20px;
-  border-top: 1px solid #00ff66;
+  border-top: 2px solid #2ac35f;
   margin-top: 40px;
 }

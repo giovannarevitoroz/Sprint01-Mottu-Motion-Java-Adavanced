@@ -26,13 +26,20 @@ public class MotoService {
         return toDTO(motoRepository.save(moto));
     }
 
-    @Cacheable(value = "motosAll")
+    // Para listar sem paginação
     public List<MotoDTO> listarTodos() {
         return motoRepository.findAll()
                 .stream()
                 .map(this::toDTO)
                 .collect(Collectors.toList());
     }
+
+    // Para listar com paginação
+    public Page<MotoDTO> listarTodos(Pageable pageable) {
+        Page<Moto> pageMotos = motoRepository.findAll(pageable);
+        return pageMotos.map(this::toDTO);
+    }
+
 
     public Page<MotoDTO> listarPorModelo(String modelo, Pageable pageable) {
         return motoRepository.findByModeloContainingIgnoreCase(modelo, pageable)
