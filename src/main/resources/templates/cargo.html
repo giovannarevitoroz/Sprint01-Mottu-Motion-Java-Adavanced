@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestão de Cargos</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header>
+  <h1>Gestão de Cargos</h1>
+  <nav>
+    <a th:href="@{/}">Home</a> |
+    <a th:href="@{/cargos}">Cargos</a> |
+    <a th:href="@{/funcionarios}">Funcionários</a>
+  </nav>
+</header>
+
+<main>
+  <!-- Formulário de Cadastro/Atualização -->
+  <section>
+    <h2 th:text="${cargo.idCargo} != null ? 'Editar Cargo' : 'Adicionar Cargo'">Adicionar Cargo</h2>
+    <form th:action="@{${cargo.idCargo} != null ? '/cargos/' + ${cargo.idCargo} : '/cargos'}"
+          th:object="${cargo}" method="post">
+      <label for="nomeCargo">Nome do Cargo:</label>
+      <input type="text" id="nomeCargo" th:field="*{nomeCargo}" maxlength="50" required>
+
+      <label for="descricaoCargo">Descrição:</label>
+      <input type="text" id="descricaoCargo" th:field="*{descricaoCargo}" maxlength="255">
+
+      <input type="hidden" th:field="*{idCargo}" />
+      <button type="submit" th:text="${cargo.idCargo} != null ? 'Atualizar' : 'Cadastrar'">Salvar</button>
+    </form>
+  </section>
+
+  <!-- Lista de Cargos -->
+  <section>
+    <h2>Cargos Cadastrados</h2>
+    <table>
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Descrição</th>
+        <th>Ações</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="c : ${cargos.content}">
+        <td th:text="${c.idCargo}">1</td>
+        <td th:text="${c.nomeCargo}">Gerente</td>
+        <td th:text="${c.descricaoCargo}">Responsável pelo setor</td>
+        <td>
+          <a th:href="@{'/cargos/editar/' + ${c.idCargo}}">Editar</a> |
+          <a th:href="@{'/cargos/deletar/' + ${c.idCargo}}"
+             onclick="return confirm('Deseja realmente deletar este cargo?')">Deletar</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <!-- Paginação -->
+    <div class="paginacao">
+            <span th:if="${cargos.hasPrevious()}">
+                <a th:href="@{'/cargos?page=' + ${cargos.number - 1}}">Anterior</a>
+            </span>
+
+      <span th:each="i : ${#numbers.sequence(0, cargos.totalPages - 1)}">
+                <a th:href="@{'/cargos?page=' + ${i}}"
+                   th:text="${i + 1}"
+                   th:classappend="${cargos.number} == ${i} ? 'ativo' : ''">1</a>
+            </span>
+
+      <span th:if="${cargos.hasNext()}">
+                <a th:href="@{'/cargos?page=' + ${cargos.number + 1}}">Próximo</a>
+            </span>
+    </div>
+  </section>
+</main>
+
+<!-- Popups -->
+<div th:if="${successMessage != null}" class="popup-success" th:text="${successMessage}"></div>
+<div th:if="${erro != null}" class="popup-error" th:text="${erro}"></div>
+
+<script>
+  setTimeout(() => {
+      const success = document.querySelector('.popup-success');
+      if (success) success.style.display = 'none';
+      const error = document.querySelector('.popup-error');
+      if (error) error.style.display = 'none';
+  }, 3000);
+</script>
+
+<footer>
+  <p>&copy; 2025 Sistema de Gestão - Todos os direitos reservados.</p>
+</footer>
+</body>
+</html>
