@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.RepresentationModel;
-@NoArgsConstructor
+
 public class SetorDTO extends RepresentationModel<SetorDTO> {
 
         private Long idSetor;
@@ -13,13 +13,17 @@ public class SetorDTO extends RepresentationModel<SetorDTO> {
         private String statusSetor;
         private Long idPatio; // Referência simplificada para Patio
 
+        // Construtor sem argumentos (necessário para Spring / Thymeleaf)
+        public SetorDTO() {
+        }
+
+        // Construtor com todos os campos
         public SetorDTO(Long idSetor, String tipoSetor, String statusSetor, Long idPatio) {
                 this.idSetor = idSetor;
                 this.tipoSetor = tipoSetor;
                 this.statusSetor = statusSetor;
                 this.idPatio = idPatio;
         }
-
 
         public Long getIdSetor() {
                 return idSetor;

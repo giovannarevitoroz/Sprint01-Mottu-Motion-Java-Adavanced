@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Gerentes - Mottu Mottion</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header>
+    <h1>Cadastro de Gerentes</h1>
+    <nav>
+        <a th:href="@{/}">Home</a> |
+        <a th:href="@{/motos}">Cadastro de Motos</a> |
+        <a th:href="@{/patios}">Gerenciamento de Pátios</a> |
+        <a th:href="@{/equipe}">Gestão de Equipe</a>
+    </nav>
+</header>
+
+<main>
+    <!-- Formulário para adicionar ou editar -->
+    <section>
+        <h2 th:text="${gerente.idGerente} != null ? 'Editar Gerente' : 'Adicionar Gerente'">Adicionar Gerente</h2>
+        <form th:action="@{${gerente.idGerente} != null ? '/gerentes/' + ${gerente.idGerente} : '/gerentes'}"
+              th:object="${gerente}" method="post">
+            <label for="nomeGerente">Nome:</label>
+            <input type="text" id="nomeGerente" th:field="*{nomeGerente}" maxlength="100" required>
+
+            <label for="telefoneGerente">Telefone:</label>
+            <input type="text" id="telefoneGerente" th:field="*{telefoneGerente}" maxlength="15" required>
+
+            <label for="cpfGerente">CPF:</label>
+            <input type="text" id="cpfGerente" th:field="*{cpfGerente}" maxlength="11" required>
+
+            <label for="patio">ID do Pátio:</label>
+            <input type="number" id="patio" th:field="*{patio.idPatio}" required>
+
+            <input type="hidden" th:field="*{idGerente}" />
+            <button type="submit" th:text="${gerente.idGerente} != null ? 'Atualizar' : 'Cadastrar'">Salvar</button>
+        </form>
+    </section>
+
+    <!-- Lista de gerentes -->
+    <section>
+        <h2>Gerentes Cadastrados</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Telefone</th>
+                <th>CPF</th>
+                <th>Pátio</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="g : ${gerentes.content}">
+                <td th:text="${g.idGerente}">1</td>
+                <td th:text="${g.nomeGerente}">Nome Gerente</td>
+                <td th:text="${g.telefoneGerente}">123456789</td>
+                <td th:text="${g.cpfGerente}">00011122233</td>
+                <td th:text="${g.patio != null ? g.patio.idPatio : ''}">1</td>
+                <td>
+                    <a th:href="@{'/gerentes/editar/' + ${g.idGerente}}">Editar</a> |
+                    <a th:href="@{'/gerentes/deletar/' + ${g.idGerente}}"
+                       onclick="return confirm('Deseja realmente deletar?')">Deletar</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- Paginação -->
+        <div class="paginacao">
+            <span th:if="${gerentes.hasPrevious()}">
+                <a th:href="@{'/gerentes?page=' + ${gerentes.number - 1}}" class="previous">Anterior</a>
+            </span>
+
+            <span th:each="i : ${#numbers.sequence(0, gerentes.totalPages - 1)}">
+                <a th:href="@{'/gerentes?page=' + ${i}}"
+                   th:text="${i + 1}"
+                   th:classappend="${gerentes.number} == ${i} ? 'ativo' : ''">1</a>
+            </span>
+
+            <span th:if="${gerentes.hasNext()}">
+                <a th:href="@{'/gerentes?page=' + ${gerentes.number + 1}}" class="next">Próximo</a>
+            </span>
+        </div>
+    </section>
+</main>
+
+<!-- Popups de sucesso / erro -->
+<div th:if="${successMessage != null}" class="popup-success" th:text="${successMessage}"></div>
+<div th:if="${erro != null}" class="popup-error" th:text="${erro}"></div>
+
+<script>
+    setTimeout(() => {
+        const success = document.querySelector('.popup-success');
+        if (success) success.style.display = 'none';
+
+        const error = document.querySelector('.popup-error');
+        if (error) error.style.display = 'none';
+    }, 3000);
+</script>
+
+<footer>
+    <p>&copy; 2025 Mottu - Todos os direitos reservados.</p>
+</footer>
+</body>
+</html>

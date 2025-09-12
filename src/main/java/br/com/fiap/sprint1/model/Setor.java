@@ -34,6 +34,8 @@ public class Setor {
     @OneToMany(mappedBy = "setor", cascade = CascadeType.ALL)
     private List<Vaga> vagas;
 
+
+
     public Long getIdSetor() {
         return idSetor;
     }

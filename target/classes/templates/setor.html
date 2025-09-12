@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciamento de Setores - Mottu Mottion</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header>
+    <h1>Gerenciamento de Setores</h1>
+    <nav>
+        <a th:href="@{/}">Home</a> |
+        <a th:href="@{/clientes}">Cadastro de Clientes</a> |
+        <a th:href="@{/motos}">Cadastro de Motos</a> |
+        <a th:href="@{/patios}">Gerenciamento de Pátios</a> |
+        <a th:href="@{/funcionarios}">Gestão de Funcionários</a> |
+        <a th:href="@{/setores}">Gerenciamento de Setores</a>
+    </nav>
+</header>
+
+<main>
+    <!-- Formulário de cadastro/edição -->
+    <section>
+        <h2 th:text="${setor.idSetor} != null ? 'Editar Setor' : 'Adicionar Setor'">Adicionar Setor</h2>
+        <form th:action="@{/setores}" th:object="${setor}" method="post">
+
+            <label for="tipoSetor">Tipo do Setor:</label>
+            <input type="text" id="tipoSetor" th:field="*{tipoSetor}" maxlength="50" required>
+
+            <label for="statusSetor">Status:</label>
+            <input type="text" id="statusSetor" th:field="*{statusSetor}" maxlength="50" required>
+
+            <label for="patio">Pátio:</label>
+            <select id="patio" th:field="*{idPatio}" required>
+                <option value="" disabled th:selected="*{idPatio} == null">Selecione</option>
+                <option th:each="p : ${patios}"
+                        th:value="${p.idPatio}"
+                        th:text="${p.nomePatio}"
+                        th:selected="*{idPatio} == ${p.idPatio}"></option>
+            </select>
+
+            <input type="hidden" th:field="*{idSetor}" />
+            <button type="submit" th:text="${setor.idSetor} != null ? 'Atualizar' : 'Cadastrar'">Salvar</button>
+        </form>
+    </section>
+
+    <!-- Lista de Setores -->
+    <section>
+        <h2>Setores Cadastrados</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tipo</th>
+                <th>Status</th>
+                <th>Pátio</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="s : ${setores.content}">
+                <td th:text="${s.idSetor}">1</td>
+                <td th:text="${s.tipoSetor}">Setor Tipo</td>
+                <td th:text="${s.statusSetor}">Ativo</td>
+                <td th:text="${#lists.find(patios, p -> p.idPatio == s.idPatio)?.nomePatio}">Pátio Central</td>
+                <td>
+                    <a th:href="@{'/setores/editar/' + ${s.idSetor}}">Editar</a> |
+                    <a th:href="@{'/setores/deletar/' + ${s.idSetor}}"
+                       onclick="return confirm('Deseja realmente deletar este setor?')">Deletar</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- Paginação -->
+        <div class="paginacao">
+            <span th:if="${setores.hasPrevious()}">
+                <a th:href="@{'/setores?page=' + ${setores.number - 1}}" class="previous">Anterior</a>
+            </span>
+
+            <span th:each="i : ${#numbers.sequence(0, setores.totalPages - 1)}">
+                <a th:href="@{'/setores?page=' + ${i}}"
+                   th:text="${i + 1}"
+                   th:classappend="${setores.number} == ${i} ? 'ativo' : ''">1</a>
+            </span>
+
+            <span th:if="${setores.hasNext()}">
+                <a th:href="@{'/setores?page=' + ${setores.number + 1}}" class="next">Próximo</a>
+            </span>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2025 Mottu - Todos os direitos reservados.</p>
+</footer>
+</body>
+</html>

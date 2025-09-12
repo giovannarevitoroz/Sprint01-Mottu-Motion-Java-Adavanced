@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestão de Movimentações - Mottu Mottion</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header>
+    <h1>Gestão de Movimentações</h1>
+    <nav>
+        <a th:href="@{/}">Home</a> |
+        <a th:href="@{/clientes}">Clientes</a> |
+        <a th:href="@{/motos}">Motos</a> |
+        <a th:href="@{/funcionarios}">Funcionários</a> |
+        <a th:href="@{/movimentacoes}">Movimentações</a>
+    </nav>
+</header>
+
+<main>
+    <!-- Formulário -->
+    <section>
+        <h2 th:text="${movimentacao.idMovimentacao} != null ? 'Editar Movimentação' : 'Adicionar Movimentação'">Adicionar</h2>
+        <form th:action="@{/movimentacoes}" th:object="${movimentacao}" method="post">
+
+            <label for="dtEntrada">Data de Entrada:</label>
+            <input type="date" id="dtEntrada" th:field="*{dtEntrada}" required>
+
+            <label for="dtSaida">Data de Saída:</label>
+            <input type="date" id="dtSaida" th:field="*{dtSaida}">
+
+            <label for="descricaoMovimentacao">Descrição:</label>
+            <input type="text" id="descricaoMovimentacao" th:field="*{descricaoMovimentacao}" maxlength="200">
+
+            <label for="moto">Moto (ID):</label>
+            <input type="number" id="moto" th:field="*{moto.idMoto}" required>
+
+            <label for="vaga">Vaga (ID):</label>
+            <input type="number" id="vaga" th:field="*{vaga.idVaga}" required>
+
+            <input type="hidden" th:field="*{idMovimentacao}">
+            <button type="submit" th:text="${movimentacao.idMovimentacao} != null ? 'Atualizar' : 'Cadastrar'">Salvar</button>
+        </form>
+    </section>
+
+    <!-- Lista de Movimentações -->
+    <section>
+        <h2>Movimentações Registradas</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Entrada</th>
+                <th>Saída</th>
+                <th>Descrição</th>
+                <th>Moto</th>
+                <th>Vaga</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="mov : ${movimentacoes.content}">
+                <td th:text="${mov.idMovimentacao}">1</td>
+                <td th:text="${mov.dtEntrada}">2025-09-10</td>
+                <td th:text="${mov.dtSaida}">2025-09-12</td>
+                <td th:text="${mov.descricaoMovimentacao}">Teste</td>
+                <td th:text="${mov.moto.idMoto}">2</td>
+                <td th:text="${mov.vaga.idVaga}">5</td>
+                <td>
+                    <a th:href="@{'/movimentacoes/editar/' + ${mov.idMovimentacao}}">Editar</a> |
+                    <a th:href="@{'/movimentacoes/deletar/' + ${mov.idMovimentacao}}"
+                       onclick="return confirm('Deseja realmente deletar?')">Deletar</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- Paginação -->
+        <div class="paginacao">
+            <span th:if="${movimentacoes.hasPrevious()}">
+                <a th:href="@{'/movimentacoes?page=' + ${movimentacoes.number - 1}}">Anterior</a>
+            </span>
+
+            <span th:each="i : ${#numbers.sequence(0, movimentacoes.totalPages - 1)}">
+                <a th:href="@{'/movimentacoes?page=' + ${i}}"
+                   th:text="${i + 1}"
+                   th:classappend="${movimentacoes.number} == ${i} ? 'ativo' : ''">1</a>
+            </span>
+
+            <span th:if="${movimentacoes.hasNext()}">
+                <a th:href="@{'/movimentacoes?page=' + ${movimentacoes.number + 1}}">Próximo</a>
+            </span>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2025 Mottu - Todos os direitos reservados.</p>
+</footer>
+</body>
+</html>

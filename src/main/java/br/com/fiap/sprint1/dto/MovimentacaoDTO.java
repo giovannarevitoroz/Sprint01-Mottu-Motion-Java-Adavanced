@@ -3,12 +3,13 @@ package br.com.fiap.sprint1.dto;
 import br.com.fiap.sprint1.model.Moto;
 import br.com.fiap.sprint1.model.Vaga;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDate;
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
+
 public class MovimentacaoDTO extends RepresentationModel<MovimentacaoDTO> {
 
         private Long idMovimentacao;
@@ -18,7 +19,16 @@ public class MovimentacaoDTO extends RepresentationModel<MovimentacaoDTO> {
         private Moto moto;
         private Vaga vaga;
 
+        public MovimentacaoDTO() {
+        }
+
         public MovimentacaoDTO(Long idMovimentacao, LocalDate dtEntrada, LocalDate dtSaida, String descricaoMovimentacao, Moto moto, Vaga vaga) {
+                this.idMovimentacao = idMovimentacao;
+                this.dtEntrada = dtEntrada;
+                this.dtSaida = dtSaida;
+                this.descricaoMovimentacao = descricaoMovimentacao;
+                this.moto = moto;
+                this.vaga = vaga;
         }
 
         // Getters e Setters

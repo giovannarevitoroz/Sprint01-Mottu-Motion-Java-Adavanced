@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestão de Funcionários - Mottu Mottion</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header>
+    <h1>Gestão de Funcionários</h1>
+    <nav>
+        <a th:href="@{/}">Home</a> |
+        <a th:href="@{/clientes}">Cadastro de Clientes</a> |
+        <a th:href="@{/motos}">Cadastro de Motos</a> |
+        <a th:href="@{/patios}">Gerenciamento de Pátios</a> |
+        <a th:href="@{/funcionarios}">Gestão de Funcionários</a>
+    </nav>
+</header>
+
+<main>
+    <!-- Formulário para adicionar ou editar -->
+    <section>
+        <h2 th:text="${funcionario.idFuncionario} != null ? 'Editar Funcionário' : 'Adicionar Funcionário'">Adicionar Funcionário</h2>
+        <form th:action="@{${funcionario.idFuncionario} != null ? '/funcionarios/' + ${funcionario.idFuncionario} : '/funcionarios'}"
+              th:object="${funcionario}" method="post">
+
+            <label for="nomeFuncionario">Nome:</label>
+            <input type="text" id="nomeFuncionario" th:field="*{nomeFuncionario}" maxlength="100" required>
+
+            <label for="telefoneFuncionario">Telefone:</label>
+            <input type="text" id="telefoneFuncionario" th:field="*{telefoneFuncionario}" maxlength="11" required>
+
+            <!-- Seleção do Cargo -->
+            <label for="cargo">Cargo:</label>
+            <select id="cargo" th:field="*{cargo.idCargo}" required>
+                <option value="" disabled th:selected="*{cargo} == null">Selecione</option>
+                <option th:each="c : ${cargos}"
+                        th:value="${c.idCargo}"
+                        th:text="${c.nomeCargo}"
+                        th:selected="*{cargo != null} ? *{cargo.idCargo} == ${c.idCargo} : false"></option>
+            </select>
+
+            <!-- Seleção do Pátio -->
+            <label for="patio">Pátio:</label>
+            <select id="patio" th:field="*{patio.id}" required>
+                <option value="" disabled th:selected="*{patio} == null">Selecione</option>
+                <option th:each="p : ${patios}"
+                        th:value="${p.id}"
+                        th:text="${p.nomePatio}"
+                        th:selected="*{patio != null} ? *{patio.id} == ${p.id} : false"></option>
+            </select>
+
+            <input type="hidden" th:field="*{idFuncionario}" />
+            <button type="submit" th:text="${funcionario.idFuncionario} != null ? 'Atualizar' : 'Cadastrar'">Salvar</button>
+        </form>
+    </section>
+
+    <!-- Lista de Funcionários -->
+    <section>
+        <h2>Funcionários Cadastrados</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Telefone</th>
+                <th>Cargo</th>
+                <th>Pátio</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="func : ${funcionarios.content}">
+                <td th:text="${func.idFuncionario}">1</td>
+                <td th:text="${func.nomeFuncionario}">Nome Funcionário</td>
+                <td th:text="${func.telefoneFuncionario}">11999999999</td>
+                <td th:text="${func.cargo.nomeCargo}">Atendente</td>
+                <td th:text="${func.patio.nomePatio}">Pátio Central</td>
+                <td>
+                    <a th:href="@{'/funcionarios/editar/' + ${func.idFuncionario}}">Editar</a> |
+                    <a th:href="@{'/funcionarios/deletar/' + ${func.idFuncionario}}"
+                       onclick="return confirm('Deseja realmente deletar?')">Deletar</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- Paginação -->
+        <div class="paginacao">
+            <!-- Botão "Anterior" -->
+            <span th:if="${funcionarios.hasPrevious()}">
+                <a th:href="@{'/funcionarios?page=' + ${funcionarios.number - 1}}" class="previous">Anterior</a>
+            </span>
+
+            <!-- Números de Página -->
+            <span th:each="i : ${#numbers.sequence(0, funcionarios.totalPages - 1)}">
+                <a th:href="@{'/funcionarios?page=' + ${i}}"
+                   th:text="${i + 1}"
+                   th:classappend="${funcionarios.number} == ${i} ? 'ativo' : ''">1</a>
+            </span>
+
+            <!-- Botão "Próximo" -->
+            <span th:if="${funcionarios.hasNext()}">
+                <a th:href="@{'/funcionarios?page=' + ${funcionarios.number + 1}}" class="next">Próximo</a>
+            </span>
+        </div>
+    </section>
+</main>
+
+<!-- Popups de sucesso / erro -->
+<div th:if="${successMessage != null}" class="popup-success" th:text="${successMessage}"></div>
+<div th:if="${erro != null}" class="popup-error" th:text="${erro}"></div>
+
+<script>
+    // Fecha os popups automaticamente após 3 segundos
+    setTimeout(() => {
+        const success = document.querySelector('.popup-success');
+        if (success) success.style.display = 'none';
+
+        const error = document.querySelector('.popup-error');
+        if (error) error.style.display = 'none';
+    }, 3000);
+</script>
+
+<footer>
+    <p>&copy; 2025 Mottu - Todos os direitos reservados.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciamento de Pátios - Mottu Mottion</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header>
+    <h1>Gerenciamento de Pátios</h1>
+    <nav>
+        <a th:href="@{/}">Home</a> |
+        <a th:href="@{/clientes}">Cadastro de Clientes</a> |
+        <a th:href="@{/motos}">Cadastro de Motos</a> |
+        <a th:href="@{/patios}">Gerenciamento de Pátios</a> |
+        <a th:href="@{/funcionarios}">Gestão de Funcionários</a>
+    </nav>
+</header>
+
+<main>
+    <!-- Formulário para adicionar ou editar Pátio -->
+    <section>
+        <h2 th:text="${patio.idPatio} != null ? 'Editar Pátio' : 'Adicionar Pátio'">Adicionar Pátio</h2>
+        <form th:action="@{${patio.idPatio} != null ? '/patios/atualizar/' + ${patio.idPatio} : '/patios'}"
+              th:object="${patio}" method="post">
+
+            <label for="nomePatio">Nome:</label>
+            <input type="text" id="nomePatio" th:field="*{nomePatio}" maxlength="100" required>
+
+            <label for="localizacaoPatio">Localização:</label>
+            <input type="text" id="localizacaoPatio" th:field="*{localizacaoPatio}" maxlength="100" required>
+
+            <label for="descricaoPatio">Descrição:</label>
+            <textarea id="descricaoPatio" th:field="*{descricaoPatio}" rows="3"></textarea>
+
+            <input type="hidden" th:field="*{idPatio}" />
+            <button type="submit" th:text="${patio.idPatio} != null ? 'Atualizar' : 'Cadastrar'">Salvar</button>
+        </form>
+    </section>
+
+    <!-- Lista de Pátios -->
+    <section>
+        <h2>Pátios Cadastrados</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Localização</th>
+                <th>Descrição</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="p : ${patios.content}">
+                <td th:text="${p.idPatio}">1</td>
+                <td th:text="${p.nomePatio}">Pátio Central</td>
+                <td th:text="${p.localizacaoPatio}">São Paulo</td>
+                <td th:text="${p.descricaoPatio}">Descrição do pátio</td>
+                <td>
+                    <a th:href="@{'/patios/editar/' + ${p.idPatio}}">Editar</a> |
+                    <a th:href="@{'/patios/deletar/' + ${p.idPatio}}"
+                       onclick="return confirm('Deseja realmente deletar este pátio?')">Deletar</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- Paginação -->
+        <div class="paginacao">
+            <span th:if="${patios.hasPrevious()}">
+                <a th:href="@{'/patios?page=' + ${patios.number - 1}}" class="previous">Anterior</a>
+            </span>
+
+            <span th:each="i : ${#numbers.sequence(0, patios.totalPages - 1)}">
+                <a th:href="@{'/patios?page=' + ${i}}"
+                   th:text="${i + 1}"
+                   th:classappend="${patios.number} == ${i} ? 'ativo' : ''">1</a>
+            </span>
+
+            <span th:if="${patios.hasNext()}">
+                <a th:href="@{'/patios?page=' + ${patios.number + 1}}" class="next">Próximo</a>
+            </span>
+        </div>
+    </section>
+</main>
+
+<!-- Popups de sucesso / erro -->
+<div th:if="${successMessage != null}" class="popup-success" th:text="${successMessage}"></div>
+<div th:if="${erro != null}" class="popup-error" th:text="${erro}"></div>
+
+<script>
+    setTimeout(() => {
+        const success = document.querySelector('.popup-success');
+        if (success) success.style.display = 'none';
+
+        const error = document.querySelector('.popup-error');
+        if (error) error.style.display = 'none';
+    }, 3000);
+</script>
+
+<footer>
+    <p>&copy; 2025 Mottu - Todos os direitos reservados.</p>
+</footer>
+</body>
+</html>

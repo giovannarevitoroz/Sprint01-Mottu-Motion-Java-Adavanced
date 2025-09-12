@@ -1,12 +1,12 @@
 package br.com.fiap.sprint1.dto;
 
 import br.com.fiap.sprint1.model.Patio;
+import lombok.Data;
 import org.springframework.hateoas.RepresentationModel;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 public class GerenteDTO extends RepresentationModel<GerenteDTO> {
 
         private Long idGerente;
@@ -16,9 +16,9 @@ public class GerenteDTO extends RepresentationModel<GerenteDTO> {
         private PatioDTO patio; // DTO para Patio
 
         public GerenteDTO() {
-        	
+
         }
-        
+
         public GerenteDTO(Long idGerente, String nomeGerente, String telefoneGerente, String cpfGerente, Patio patio) {
         }
 
