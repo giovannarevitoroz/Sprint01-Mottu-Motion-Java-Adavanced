@@ -1,6 +1,5 @@
 package br.com.fiap.sprint1.view;
 
-import br.com.fiap.sprint1.dto.PatioDTO;
 import br.com.fiap.sprint1.dto.SetorDTO;
 import br.com.fiap.sprint1.service.PatioService;
 import br.com.fiap.sprint1.service.SetorService;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/setores")
-public class SetoViewController {
+public class SetorViewController {
 
     @Autowired
     private SetorService setorService;

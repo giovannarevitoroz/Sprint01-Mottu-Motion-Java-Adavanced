@@ -12,7 +12,7 @@
         <a th:href="@{/}">Home</a> |
         <a th:href="@{/motos}">Cadastro de Motos</a> |
         <a th:href="@{/patios}">Gerenciamento de Pátios</a> |
-        <a th:href="@{/equipe}">Gestão de Equipe</a>
+        <a th:href="@{/funcionarios}">Gestão de Funcionários</a>
     </nav>
 </header>
 
@@ -54,7 +54,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="g : ${gerentes.content}">
+            <tr th:each="g : ${gerentes}">
                 <td th:text="${g.idGerente}">1</td>
                 <td th:text="${g.nomeGerente}">Nome Gerente</td>
                 <td th:text="${g.telefoneGerente}">123456789</td>
@@ -71,6 +71,7 @@
 
         <!-- Paginação -->
         <div class="paginacao">
+            <!-- Apenas mostra se estiver usando Page; caso seja List, pode remover esta seção -->
             <span th:if="${gerentes.hasPrevious()}">
                 <a th:href="@{'/gerentes?page=' + ${gerentes.number - 1}}" class="previous">Anterior</a>
             </span>

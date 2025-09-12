@@ -62,7 +62,9 @@
                 <td th:text="${s.idSetor}">1</td>
                 <td th:text="${s.tipoSetor}">Setor Tipo</td>
                 <td th:text="${s.statusSetor}">Ativo</td>
-                <td th:text="${#lists.find(patios, p -> p.idPatio == s.idPatio)?.nomePatio}">Pátio Central</td>
+                <td>
+                    <span th:each="p : ${patios}" th:if="${p.idPatio == s.idPatio}" th:text="${p.nomePatio}"></span>
+                </td>
                 <td>
                     <a th:href="@{'/setores/editar/' + ${s.idSetor}}">Editar</a> |
                     <a th:href="@{'/setores/deletar/' + ${s.idSetor}}"

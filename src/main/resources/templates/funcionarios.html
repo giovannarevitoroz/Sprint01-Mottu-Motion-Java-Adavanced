@@ -2,15 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Gestão de Funcionários - Mottu Mottion</title>
+    <title>Cadastro de Funcionários - Mottu Mottion</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 <header>
-    <h1>Gestão de Funcionários</h1>
+    <h1>Cadastro de Funcionários</h1>
     <nav>
         <a th:href="@{/}">Home</a> |
-        <a th:href="@{/clientes}">Cadastro de Clientes</a> |
         <a th:href="@{/motos}">Cadastro de Motos</a> |
         <a th:href="@{/patios}">Gerenciamento de Pátios</a> |
         <a th:href="@{/funcionarios}">Gestão de Funcionários</a>
@@ -23,31 +22,22 @@
         <h2 th:text="${funcionario.idFuncionario} != null ? 'Editar Funcionário' : 'Adicionar Funcionário'">Adicionar Funcionário</h2>
         <form th:action="@{${funcionario.idFuncionario} != null ? '/funcionarios/' + ${funcionario.idFuncionario} : '/funcionarios'}"
               th:object="${funcionario}" method="post">
-
             <label for="nomeFuncionario">Nome:</label>
             <input type="text" id="nomeFuncionario" th:field="*{nomeFuncionario}" maxlength="100" required>
 
             <label for="telefoneFuncionario">Telefone:</label>
-            <input type="text" id="telefoneFuncionario" th:field="*{telefoneFuncionario}" maxlength="11" required>
+            <input type="text" id="telefoneFuncionario" th:field="*{telefoneFuncionario}" maxlength="15" required>
 
-            <!-- Seleção do Cargo -->
+            <label for="patio">Pátio:</label>
+            <select id="patio" th:field="*{patio.idPatio}" required>
+                <option value="" disabled th:selected="*{patio} == null">Selecione</option>
+                <option th:each="p : ${patios}" th:value="${p.idPatio}" th:text="${p.nomePatio}"></option>
+            </select>
+
             <label for="cargo">Cargo:</label>
             <select id="cargo" th:field="*{cargo.idCargo}" required>
                 <option value="" disabled th:selected="*{cargo} == null">Selecione</option>
-                <option th:each="c : ${cargos}"
-                        th:value="${c.idCargo}"
-                        th:text="${c.nomeCargo}"
-                        th:selected="*{cargo != null} ? *{cargo.idCargo} == ${c.idCargo} : false"></option>
-            </select>
-
-            <!-- Seleção do Pátio -->
-            <label for="patio">Pátio:</label>
-            <select id="patio" th:field="*{patio.id}" required>
-                <option value="" disabled th:selected="*{patio} == null">Selecione</option>
-                <option th:each="p : ${patios}"
-                        th:value="${p.id}"
-                        th:text="${p.nomePatio}"
-                        th:selected="*{patio != null} ? *{patio.id} == ${p.id} : false"></option>
+                <option th:each="c : ${cargos}" th:value="${c.idCargo}" th:text="${c.nomeCargo}"></option>
             </select>
 
             <input type="hidden" th:field="*{idFuncionario}" />
@@ -55,7 +45,7 @@
         </form>
     </section>
 
-    <!-- Lista de Funcionários -->
+    <!-- Lista de funcionários -->
     <section>
         <h2>Funcionários Cadastrados</h2>
         <table>
@@ -64,18 +54,18 @@
                 <th>ID</th>
                 <th>Nome</th>
                 <th>Telefone</th>
-                <th>Cargo</th>
                 <th>Pátio</th>
+                <th>Cargo</th>
                 <th>Ações</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="func : ${funcionarios.content}">
+            <tr th:each="func : ${funcionarios}">
                 <td th:text="${func.idFuncionario}">1</td>
-                <td th:text="${func.nomeFuncionario}">Nome Funcionário</td>
-                <td th:text="${func.telefoneFuncionario}">11999999999</td>
-                <td th:text="${func.cargo.nomeCargo}">Atendente</td>
-                <td th:text="${func.patio.nomePatio}">Pátio Central</td>
+                <td th:text="${func.nomeFuncionario}">Nome</td>
+                <td th:text="${func.telefoneFuncionario}">123456789</td>
+                <td th:text="${func.patio.nomePatio}">Patio A</td>
+                <td th:text="${func.cargo.nomeCargo}">Cargo X</td>
                 <td>
                     <a th:href="@{'/funcionarios/editar/' + ${func.idFuncionario}}">Editar</a> |
                     <a th:href="@{'/funcionarios/deletar/' + ${func.idFuncionario}}"
@@ -84,26 +74,6 @@
             </tr>
             </tbody>
         </table>
-
-        <!-- Paginação -->
-        <div class="paginacao">
-            <!-- Botão "Anterior" -->
-            <span th:if="${funcionarios.hasPrevious()}">
-                <a th:href="@{'/funcionarios?page=' + ${funcionarios.number - 1}}" class="previous">Anterior</a>
-            </span>
-
-            <!-- Números de Página -->
-            <span th:each="i : ${#numbers.sequence(0, funcionarios.totalPages - 1)}">
-                <a th:href="@{'/funcionarios?page=' + ${i}}"
-                   th:text="${i + 1}"
-                   th:classappend="${funcionarios.number} == ${i} ? 'ativo' : ''">1</a>
-            </span>
-
-            <!-- Botão "Próximo" -->
-            <span th:if="${funcionarios.hasNext()}">
-                <a th:href="@{'/funcionarios?page=' + ${funcionarios.number + 1}}" class="next">Próximo</a>
-            </span>
-        </div>
     </section>
 </main>
 

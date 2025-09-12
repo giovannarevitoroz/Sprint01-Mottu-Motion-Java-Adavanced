@@ -13,6 +13,10 @@ public class PatioDTO {
                 this.descricaoPatio = descricaoPatio;
         }
 
+        public Long getId() {
+                return idPatio;
+        }
+
         // Construtor vazio (caso precise)
         public PatioDTO() {}
 
