@@ -9,6 +9,7 @@
 <header>
     <h1>Mottu Mottion</h1>
     <p>Sistema de Gestão de Pátios da Mottu</p>
+    <a th:href="@{/logout}">Sair</a>
 </header>
 
 <main>
@@ -16,24 +17,30 @@
         <h2>Funcionalidades Principais</h2>
         <nav>
             <ul>
-                <!-- Cadastro e gerenciamento -->
+                <!-- Todos os usuários logados -->
                 <li><a th:href="@{/clientes}">Cadastro de Clientes</a></li>
                 <li><a th:href="@{/motos}">Cadastro de Motos</a></li>
-
-                <!-- Pátios e estrutura -->
-                <li><a th:href="@{/patios}">Gerenciamento de Pátios</a></li>
-                <li><a th:href="@{/setores}">Setores</a></li>
-                <li><a th:href="@{/vagas}">Vagas</a></li>
-
-                <!-- Movimentações -->
                 <li><a th:href="@{/movimentacoes}">Movimentações</a></li>
 
-                <!-- Equipe -->
-                <li><a th:href="@{/funcionarios}">Gestão de Funcionários</a></li>
-                <li><a th:href="@{/cargos}">Cargos</a></li>
-
-                <!-- Relatórios -->
-                <li><a th:href="@{/gerentes}">Gerentes</a></li>
+                <!-- Apenas ADMIN -->
+                <li th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                    <a th:href="@{/funcionarios}">Gestão de Funcionários</a>
+                </li>
+                <li th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                    <a th:href="@{/cargos}">Cargos</a>
+                </li>
+                <li th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                    <a th:href="@{/patios}">Gerenciamento de Pátios</a>
+                </li>
+                <li th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                    <a th:href="@{/setores}">Setores</a>
+                </li>
+                <li th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                    <a th:href="@{/vagas}">Vagas</a>
+                </li>
+                <li th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                    <a th:href="@{/gerentes}">Gerentes</a>
+                </li>
             </ul>
         </nav>
     </section>

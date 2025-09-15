@@ -22,16 +22,16 @@ public class PatioViewController {
                               @RequestParam(defaultValue = "10") int size,
                               Model model) {
         Page<PatioDTO> patiosPage = patioService.listarTodos(PageRequest.of(page, size));
-        model.addAttribute("patios", patiosPage);
-        model.addAttribute("patio", new PatioDTO()); // ⚠️ Isso resolve o erro
-        return "patio";
+        model.addAttribute("patios", patiosPage);      // Página completa
+        model.addAttribute("patio", new PatioDTO());   // Formulário vazio
+        return "patio"; // usar único HTML
     }
 
     // Formulário para novo Pátio
     @GetMapping("/novo")
     public String novoPatio(Model model) {
         model.addAttribute("patio", new PatioDTO());
-        return "patio-form";
+        return "patio"; // mudar de "patio-form" para "patio"
     }
 
     // Salvar novo Pátio
@@ -44,14 +44,13 @@ public class PatioViewController {
     // Formulário de edição
     @GetMapping("/editar/{id}")
     public String editarPatio(@PathVariable Long id, Model model) {
-        // Buscar Pátio pelo ID usando serviço
-        PatioDTO patioDTO = patioService.listarTodos(PageRequest.of(0, Integer.MAX_VALUE)) // pegar todos
+        PatioDTO patioDTO = patioService.listarTodos(PageRequest.of(0, Integer.MAX_VALUE))
                 .stream()
                 .filter(p -> p.getIdPatio().equals(id))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Pátio não encontrado"));
         model.addAttribute("patio", patioDTO);
-        return "patio-form";
+        return "patio";
     }
 
     // Atualizar Pátio

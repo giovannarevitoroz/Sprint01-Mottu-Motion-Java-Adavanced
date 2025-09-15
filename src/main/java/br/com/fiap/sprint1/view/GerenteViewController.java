@@ -3,6 +3,7 @@ package br.com.fiap.sprint1.view;
 import br.com.fiap.sprint1.dto.GerenteDTO;
 import br.com.fiap.sprint1.service.GerenteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -29,11 +30,14 @@ public class GerenteViewController {
             }
         } catch (NumberFormatException ignored) {}
 
-        model.addAttribute("gerentes", gerenteService.listarTodos());
+        // Retorna uma Page em vez de List
+        Page<GerenteDTO> gerentesPage = gerenteService.buscarPorPatio(null, pageable); // método que retorna Page<GerenteDTO>
+
+        model.addAttribute("gerentes", gerentesPage);
         model.addAttribute("gerente", new GerenteDTO());
         model.addAttribute("editadoId", id);
 
-        return "gerentes"; // procura gerentes.html em templates
+        return "gerentes";
     }
 
     // Carregar formulário com dados do gerente para edição

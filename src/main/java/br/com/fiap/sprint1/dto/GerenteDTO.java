@@ -22,6 +22,15 @@ public class GerenteDTO extends RepresentationModel<GerenteDTO> {
         public GerenteDTO(Long idGerente, String nomeGerente, String telefoneGerente, String cpfGerente, Patio patio) {
         }
 
+        public GerenteDTO(Long idGerente, String nomeGerente, String telefoneGerente, String cpfGerente, PatioDTO patio) {
+                this.idGerente = idGerente;
+                this.nomeGerente = nomeGerente;
+                this.telefoneGerente = telefoneGerente;
+                this.cpfGerente = cpfGerente;
+                this.patio = patio;
+        }
+
+
         // Getters e Setters
         public Long getIdGerente() {
                 return idGerente;
