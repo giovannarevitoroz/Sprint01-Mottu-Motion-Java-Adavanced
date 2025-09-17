@@ -30,8 +30,8 @@ public class GerenteViewController {
             }
         } catch (NumberFormatException ignored) {}
 
-        // Retorna uma Page em vez de List
-        Page<GerenteDTO> gerentesPage = gerenteService.buscarPorPatio(null, pageable); // método que retorna Page<GerenteDTO>
+        // Retorna todos os gerentes paginados
+        Page<GerenteDTO> gerentesPage = gerenteService.buscarPorPatio(null, pageable);
 
         model.addAttribute("gerentes", gerentesPage);
         model.addAttribute("gerente", new GerenteDTO());
@@ -42,10 +42,11 @@ public class GerenteViewController {
 
     // Carregar formulário com dados do gerente para edição
     @GetMapping("/editar/{id}")
-    public String editarGerente(@PathVariable Long id, Model model) {
+    public String editarGerente(@PathVariable Long id, Model model,
+                                @PageableDefault(size = 10) Pageable pageable) {
         GerenteDTO gerente = gerenteService.buscarPorId(id);
         model.addAttribute("gerente", gerente);
-        model.addAttribute("gerentes", gerenteService.listarTodos());
+        model.addAttribute("gerentes", gerenteService.buscarPorPatio(null, pageable));
         model.addAttribute("editadoId", id);
 
         return "gerentes";

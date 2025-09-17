@@ -9,7 +9,7 @@
 <header>
     <h1>Gerenciamento de Pátios</h1>
     <nav>
-        <a th:href="@{/}">Home</a> |
+        <a th:href="@{/home}">Home</a> |
         <a th:href="@{/motos}">Cadastro de Motos</a> |
         <a th:href="@{/patios}">Gerenciamento de Pátios</a> |
         <a th:href="@{/equipe}">Gestão de Equipe</a>
@@ -19,9 +19,12 @@
 <main>
     <!-- Formulário para adicionar ou editar Pátio -->
     <section>
-        <h2 th:text="${patio.idPatio} != null ? 'Editar Pátio' : 'Adicionar Pátio'">Adicionar Pátio</h2>
-        <form th:action="@{${patio.idPatio} != null ? '/patios/atualizar/' + ${patio.idPatio} : '/patios'}"
-              th:object="${patio}" method="post">
+        <h2 th:text="${patio.idPatio != null} ? 'Editar Pátio' : 'Adicionar Pátio'">Adicionar Pátio</h2>
+        <form th:object="${patio}" method="post"
+              th:action="${patio.idPatio != null} ? @{/patios/atualizar/{id}(id=${patio.idPatio})} : @{/patios}">
+
+            <input type="hidden" th:field="*{idPatio}" />
+
             <label for="nomePatio">Nome:</label>
             <input type="text" id="nomePatio" th:field="*{nomePatio}" maxlength="100" required>
 
@@ -31,8 +34,7 @@
             <label for="descricaoPatio">Descrição:</label>
             <textarea id="descricaoPatio" th:field="*{descricaoPatio}" rows="3"></textarea>
 
-            <input type="hidden" th:field="*{idPatio}" />
-            <button type="submit" th:text="${patio.idPatio} != null ? 'Atualizar' : 'Cadastrar'">Salvar</button>
+            <button type="submit" th:text="${patio.idPatio != null} ? 'Atualizar' : 'Cadastrar'">Salvar</button>
         </form>
     </section>
 
@@ -56,8 +58,8 @@
                 <td th:text="${p.localizacaoPatio}">São Paulo</td>
                 <td th:text="${p.descricaoPatio}">Descrição do pátio</td>
                 <td>
-                    <a th:href="@{'/patios/editar/' + ${p.idPatio}}">Editar</a> |
-                    <a th:href="@{'/patios/deletar/' + ${p.idPatio}}"
+                    <a th:href="@{/patios/editar/{id}(id=${p.idPatio})}">Editar</a> |
+                    <a th:href="@{/patios/deletar/{id}(id=${p.idPatio})}"
                        onclick="return confirm('Deseja realmente deletar este pátio?')">Deletar</a>
                 </td>
             </tr>

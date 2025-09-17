@@ -16,22 +16,26 @@ public class PatioViewController {
     @Autowired
     private PatioService patioService;
 
-    // Listar todos com paginação
+    // Listar todos os pátios com paginação
     @GetMapping
     public String listarTodos(@RequestParam(defaultValue = "0") int page,
                               @RequestParam(defaultValue = "10") int size,
                               Model model) {
         Page<PatioDTO> patiosPage = patioService.listarTodos(PageRequest.of(page, size));
         model.addAttribute("patios", patiosPage);      // Página completa
-        model.addAttribute("patio", new PatioDTO());   // Formulário vazio
-        return "patio"; // usar único HTML
+        model.addAttribute("patio", new PatioDTO());   // Formulário vazio para cadastro
+        return "patio";
     }
 
     // Formulário para novo Pátio
     @GetMapping("/novo")
-    public String novoPatio(Model model) {
+    public String novoPatio(@RequestParam(defaultValue = "0") int page,
+                            @RequestParam(defaultValue = "10") int size,
+                            Model model) {
         model.addAttribute("patio", new PatioDTO());
-        return "patio"; // mudar de "patio-form" para "patio"
+        // Enviar a lista completa para não quebrar o template
+        model.addAttribute("patios", patioService.listarTodos(PageRequest.of(page, size)));
+        return "patio";
     }
 
     // Salvar novo Pátio
@@ -43,13 +47,17 @@ public class PatioViewController {
 
     // Formulário de edição
     @GetMapping("/editar/{id}")
-    public String editarPatio(@PathVariable Long id, Model model) {
-        PatioDTO patioDTO = patioService.listarTodos(PageRequest.of(0, Integer.MAX_VALUE))
-                .stream()
-                .filter(p -> p.getIdPatio().equals(id))
-                .findFirst()
+    public String editarPatio(@PathVariable Long id,
+                              @RequestParam(defaultValue = "0") int page,
+                              @RequestParam(defaultValue = "10") int size,
+                              Model model) {
+        PatioDTO patioDTO = patioService.buscarPorId(id)
                 .orElseThrow(() -> new RuntimeException("Pátio não encontrado"));
-        model.addAttribute("patio", patioDTO);
+
+        Page<PatioDTO> patiosPage = patioService.listarTodos(PageRequest.of(page, size));
+
+        model.addAttribute("patio", patioDTO);   // Formulário de edição
+        model.addAttribute("patios", patiosPage); // Lista completa
         return "patio";
     }
 

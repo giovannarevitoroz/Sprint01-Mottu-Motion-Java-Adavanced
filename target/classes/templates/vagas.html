@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciamento de Vagas - Mottu Motion</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header>
+    <h1>Gerenciamento de Vagas</h1>
+    <nav>
+        <ul>
+            <li><a th:href="@{/home}">Home</a></li>
+            <li><a th:href="@{/clientes}">Clientes</a></li>
+            <li><a th:href="@{/motos}">Motos</a></li>
+            <li><a th:href="@{/movimentacoes}">Movimentações</a></li>
+            <!-- Apenas GERENTE -->
+            <li th:if="${#authorization.expression('hasRole(''ROLE_GERENTE'')')}"><a th:href="@{/funcionarios}">Funcionários</a></li>
+            <li th:if="${#authorization.expression('hasRole(''ROLE_GERENTE'')')}"><a th:href="@{/cargos}">Cargos</a></li>
+            <li th:if="${#authorization.expression('hasRole(''ROLE_GERENTE'')')}"><a th:href="@{/patios}">Pátios</a></li>
+            <li th:if="${#authorization.expression('hasRole(''ROLE_GERENTE'')')}"><a th:href="@{/setores}">Setores</a></li>
+            <li th:if="${#authorization.expression('hasRole(''ROLE_GERENTE'')')}"><a th:href="@{/vagas}">Vagas</a></li>
+            <li th:if="${#authorization.expression('hasRole(''ROLE_GERENTE'')')}"><a th:href="@{/gerentes}">Gerentes</a></li>
+            <li><a th:href="@{/logout}">Sair</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <section>
+        <h2 th:text="${vaga.idVaga} != null ? 'Editar Vaga' : 'Adicionar Vaga'">Adicionar Vaga</h2>
+        <form th:action="@{${vaga.idVaga} != null ? '/vagas/' + ${vaga.idVaga} : '/vagas'}"
+              th:object="${vaga}" method="post">
+
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+            <label for="numeroVaga">Número da Vaga:</label>
+            <input type="text" id="numeroVaga" th:field="*{numeroVaga}" maxlength="50" required>
+
+            <label for="statusOcupada">Status (0=Livre, 1=Ocupada):</label>
+            <input type="text" id="statusOcupada" th:field="*{statusOcupada}" maxlength="50" required>
+
+            <label for="idSetor">Setor:</label>
+            <input type="text" id="idSetor" th:field="*{idSetor}" required>
+
+            <input type="hidden" th:field="*{idVaga}" />
+            <button type="submit" th:text="${vaga.idVaga} != null ? 'Atualizar' : 'Cadastrar'">Salvar</button>
+        </form>
+    </section>
+
+    <section>
+        <h2>Vagas Cadastradas</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Número da Vaga</th>
+                <th>Status</th>
+                <th>Setor (ID)</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="v : ${vagas.content}">
+                <td th:text="${v.idVaga}">1</td>
+                <td th:text="${v.numeroVaga}">Número Vaga</td>
+                <td th:text="${v.statusOcupada}">0</td>
+                <td th:text="${v.idSetor}">1</td>
+                <td>
+                    <a th:href="@{'/vagas/editar/' + ${v.idVaga}}">Editar</a> |
+                    <a th:href="@{'/vagas/deletar/' + ${v.idVaga}}"
+                       onclick="return confirm('Deseja realmente deletar esta vaga?')">Deletar</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="paginacao" th:if="${vagas.totalPages > 1}">
+            <span th:if="${vagas.hasPrevious()}">
+                <a th:href="@{'/vagas?page=' + ${vagas.number - 1}}" class="previous">Anterior</a>
+            </span>
+            <span th:each="i : ${#numbers.sequence(0, vagas.totalPages - 1)}">
+                <a th:href="@{'/vagas?page=' + ${i}}"
+                   th:text="${i + 1}"
+                   th:classappend="${vagas.number} == ${i} ? 'ativo' : ''">1</a>
+            </span>
+            <span th:if="${vagas.hasNext()}">
+                <a th:href="@{'/vagas?page=' + ${vagas.number + 1}}" class="next">Próximo</a>
+            </span>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2025 Mottu - Todos os direitos reservados.</p>
+</footer>
+</body>
+</html>

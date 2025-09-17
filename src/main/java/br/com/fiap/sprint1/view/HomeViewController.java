@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeViewController {
 
-    @GetMapping("/")
+    @GetMapping({"/home"})
     public String home(Model model) {
         // valores de exemplo, futuramente podem vir do banco de dados
         model.addAttribute("totalMotos", 150);
@@ -17,4 +17,3 @@ public class HomeViewController {
         return "home"; // procura em templates/home.html
     }
 }
-

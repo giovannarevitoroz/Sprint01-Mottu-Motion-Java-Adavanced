@@ -18,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,6 +45,10 @@ public class PatioService {
         return patio;
     }
 
+    public Optional<PatioDTO> buscarPorId(Long id) {
+        return patioRepository.findById(id)
+                .map(this::toDTO);
+    }
     @Cacheable(value = "patiosTodos", key = "#pageable.pageNumber + '-' + #pageable.pageSize")
     public Page<PatioDTO> listarTodos(Pageable pageable) {
         return patioRepository.findAll(pageable).map(this::toDTO);
