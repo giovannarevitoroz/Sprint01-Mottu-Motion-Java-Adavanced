@@ -1,24 +1,28 @@
+Perfeito 🚀
+Aqui está a **documentação reorganizada e completa**, já com **MySQL, Flyway, JWT, pacotes, dependências e endpoints**. Assim você já pode usar no seu repositório como um **README.md** bem estruturado.
 
+---
 
 # 🚀 Mottu Mottion: Sistema Inteligente de Gestão de Pátios para Frota de Motos de Entregadores
 
 > Plataforma moderna com API RESTful para controle operacional e logístico das motos da Mottu.
 
-**Mottu Mottion** é um sistema de gestão de pátios voltado para as motos utilizadas por entregadores parceiros da Mottu. Ele organiza o fluxo de entrada e saída, alocação de vagas, tempo de permanência e envia notificações automatizadas. A aplicação se comunica via API REST e pode ser acessada por interfaces web ou mobile.
+**Mottu Mottion** é um sistema de gestão de pátios voltado para as motos utilizadas por entregadores parceiros da Mottu.
+Ele organiza o fluxo de entrada e saída, alocação de vagas, tempo de permanência e envia notificações automatizadas.
+A aplicação se comunica via API REST e pode ser acessada por interfaces web ou mobile.
 
 ---
 
 ## 📜 **Visão Geral do Projeto**
 
-O Mottu Mottion surgiu para solucionar um dos principais gargalos operacionais da Mottu: a ausência de um controle padronizado e rastreável nos pátios das mais de 100 filiais. Dificuldades em localizar motos, monitorar manutenções e prevenir furtos impactavam diretamente a produtividade e a segurança da operação.
+O Mottu Mottion surgiu para solucionar um dos principais gargalos operacionais da Mottu: a ausência de um controle padronizado e rastreável nos pátios das mais de 100 filiais.
+Dificuldades em localizar motos, monitorar manutenções e prevenir furtos impactavam diretamente a produtividade e a segurança da operação.
 
-O sistema automatiza e otimiza a movimentação física das motos, proporcionando visibilidade em tempo real, rastreabilidade total e ações corretivas proativas — com o apoio de sensores IoT, visão computacional e uma plataforma responsiva.
+O sistema automatiza e otimiza a movimentação física das motos, proporcionando **visibilidade em tempo real, rastreabilidade total e ações corretivas proativas** — com o apoio de sensores IoT, visão computacional e uma plataforma responsiva.
 
 ---
 
 ## 🎯 **Objetivo**
-
-Modelar um sistema de informação que atenda às principais necessidades operacionais da Mottu, com foco em:
 
 | Requisito                  | Descrição                                                   |
 | -------------------------- | ----------------------------------------------------------- |
@@ -35,85 +39,77 @@ Modelar um sistema de informação que atenda às principais necessidades operac
 * **Kaian Gustavo de Oliveira Nascimento** – RM558986
 * **Lucas Kenji Kikuchi** – RM554424
 
-
 ---
 
-## 🧱 **Arquitetura e Componentes Principais**
+## 🧱 **Arquitetura e Estrutura do Projeto**
 
-### 📦 **Pacotes e suas Responsabilidades**
-
-| Pacote        | Descrição                                                                                                      |
-|---------------|---------------------------------------------------------------------------------------------------------------|
-| **Model**     | Contém as classes de entidade que representam os dados da aplicação (ex: `Cliente`, `Moto`). Mapeiam tabelas do banco. |
-| **DTO**       | *Data Transfer Objects*: Transferem dados entre camadas, expondo apenas informações necessárias e protegendo a estrutura interna das entidades. |
-| **Repository**| Interfaces que estendem `JpaRepository`. Responsáveis pela comunicação com o banco de dados (operações CRUD). |
-| **Service**   | Camada de lógica de negócio. Processa regras, validações e coordena operações entre Repository e Controller.  |
-| **Controller**| Camada que expõe endpoints da API. Recebe requisições HTTP, delega para Service e retorna respostas adequadas. |
-| **Exception** | Classes personalizadas para tratamento de erros (ex: `ResourceNotFoundException`) e manipulação global de exceções. |
-| **CORS**      | Configuração de *Cross-Origin Resource Sharing* para permitir que a API seja acessada por domínios diferentes do seu. |
+| Pacote                 | Descrição                                                                                                  |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------- |
+| **controller**         | Controllers REST principais da API (CRUD de clientes, motos, funcionários, etc.).                          |
+| **cors**               | Configurações de **CORS** para permitir acesso entre frontend e backend.                                   |
+| **dto**                | Objetos de Transferência de Dados (DTOs) usados para comunicação entre camadas e validação de entrada.     |
+| **exception**          | Classes de tratamento de exceções customizadas e handlers globais.                                         |
+| **model**              | Entidades de domínio mapeadas com JPA/Hibernate.                                                           |
+| **repository**         | Interfaces `JpaRepository` responsáveis pela persistência e consultas ao banco de dados.                   |
+| **security**           | Configuração de autenticação/autorização com **Spring Security e JWT**.                                    |
+| **service**            | Camada de serviços contendo a lógica de negócio, validações e integrações entre controller e repository.   |
+| **view**               | Controllers voltados para a camada de visualização com **Thymeleaf** (rotas para renderizar páginas HTML). |
+| **Sprint2Application** | Classe principal que inicializa o Spring Boot.                                                             |
 
 ---
-
-## 🌐 **O que é API? REST vs RESTful**
-
-### 🔹 **API (Application Programming Interface)**
-Conjunto de definições e protocolos que permite a comunicação entre sistemas. Funciona como um contrato entre cliente e servidor, definindo como os recursos podem ser acessados e manipulados.
-
-### 🔄 **REST (Representational State Transfer)**
-Estilo arquitetural que define restrições para criação de web services:
-- **Client-Server**: Separação de responsabilidades
-- **Stateless**: Cada requisição contém todas informações necessárias
-- **Cacheable**: Respostas podem ser cacheadas
-- **Uniform Interface**: Interface consistente (URIs, métodos HTTP)
-- **Layered System**: Arquitetura em camadas
-- **Code-on-Demand (opcional)**: Execução de código no cliente
-
-### ✅ **API RESTful**
-Uma API é considerada **RESTful** quando adere estritamente aos princípios REST. O termo "REST" é frequentemente usado de forma genérica, enquanto "RESTful" denota conformidade completa com as restrições REST.
-
-| Característica       | REST API          | RESTful API       |
-|----------------------|-------------------|-------------------|
-| **Adesão ao REST**   | Parcial           | Total             |
-| **Métodos HTTP**     | Uso variado       | Semântica precisa |
-| **HATEOAS**          | Opcional          | Obrigatório       |
-| **URI Structure**    | Às vezes rígida   | Recursos claros   |
-
-
 ---
 
 ## 📦 **Dependências (`pom.xml`)**
 
-| Dependência                      | Finalidade                             |
-| -------------------------------- | -------------------------------------- |
-| `spring-boot-starter-data-jpa`   | Persistência de dados com JPA.         |
-| `spring-boot-starter-web`        | Criação de APIs REST.                  |
-| `spring-boot-starter-validation` | Validação de dados.                    |
-| `spring-boot-starter-hateoas`    | Suporte a HATEOAS.                     |
-| `spring-boot-devtools`           | Recarga automática no desenvolvimento. |
-| `lombok`                         | Redução de código boilerplate.         |
-| `spring-boot-starter-test`       | Testes automatizados.                  |
-| `spring-boot-starter-cache`      | Implementação de cache.                |
-| `ojdbc11`                        | Integração com banco de dados Oracle.  |
+| Dependência                      | Finalidade                         |
+| -------------------------------- | ---------------------------------- |
+| `spring-boot-starter-data-jpa`   | Persistência de dados com JPA.     |
+| `spring-boot-starter-web`        | Criação de APIs REST.              |
+| `spring-boot-starter-validation` | Validação de dados.                |
+| `spring-boot-starter-thymeleaf`  | Templates HTML com Thymeleaf.      |
+| `spring-boot-starter-security`   | Segurança com Spring Security.     |
+| `jjwt` / `spring-security-jwt`   | Geração e validação de tokens JWT. |
+| `spring-boot-starter-cache`      | Implementação de cache.            |
+| `mysql-connector-j`              | Integração com banco MySQL.        |
+| `flyway-core`                    | Versionamento do banco.            |
+| `lombok`                         | Redução de código boilerplate.     |
+| `spring-boot-starter-test`       | Testes automatizados.              |
 
 ---
 
-## 🛠 **Configuração do Banco de Dados**
+## 🛠 **Configuração do Banco de Dados (MySQL)**
 
-A aplicação utiliza Oracle como banco de dados. Exemplo de configuração em `application.properties`:
+Arquivo `application.properties`:
 
 ```properties
-spring.datasource.url=jdbc:oracle:thin:@//oracle.fiap.com.br:1521/orcl
-spring.datasource.username=seu-usuario
-spring.datasource.password=sua-senha
-spring.datasource.driver-class-name=oracle.jdbc.OracleDriver
+spring.datasource.url=jdbc:mysql://localhost:3306/mottu_mottion?useSSL=false&serverTimezone=UTC
+spring.datasource.username=root
+spring.datasource.password=suasenha
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 
-spring.jpa.database-platform=org.hibernate.dialect.OracleDialect
+spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
 spring.jpa.hibernate.ddl-auto=validate
 spring.jpa.show-sql=true
 
+# Flyway
+spring.flyway.enabled=true
+spring.flyway.locations=classpath:db/migration
+
+# Cache
 spring.cache.type=simple
 logging.level.org.springframework.cache=DEBUG
 ```
+
+---
+
+## 📂 **Scripts Flyway**
+
+Local: `resources/db/migration`
+
+* `V1__create_users.sql` → Criação da tabela de usuários
+* `V2__insert_initial_users.sql` → Inserção de dados iniciais
+* `V3__insert_new_users.sql` → Novos registros de usuários
+* `V4__update_role.sql` → Alteração de papéis (roles)
 
 ---
 
@@ -123,40 +119,40 @@ logging.level.org.springframework.cache=DEBUG
 
 * **Java 17+**
 * **Maven**
+* **MySQL 8+**
 * **IDE** (IntelliJ, Eclipse ou VSCode)
 
-### 1️⃣ Clone o Repositório
+### 🔧 Passos
+
+1️⃣ Clone o repositório:
 
 ```bash
 git clone https://github.com/giovannarevitoroz/Sprint01-Mottu-Motion-Java-Adavanced.git
 ```
 
-### 2️⃣ Configure o Banco de Dados
+2️⃣ Crie o banco no MySQL:
 
-Atualize o `application.properties` com suas credenciais Oracle.
+```sql
+CREATE DATABASE mottu_mottion;
+```
 
-### 3️⃣ Importe o Projeto na IDE
+3️⃣ Ajuste o `application.properties` com suas credenciais.
 
-Abra o projeto em sua IDE. O Maven cuidará das dependências automaticamente.
+4️⃣ Execute o Flyway (migrações rodam automaticamente na inicialização).
 
-### 4️⃣ Instale as Dependências
+5️⃣ Instale as dependências:
 
 ```bash
 mvn install
 ```
 
-### 5️⃣ Execute a Aplicação
-
-**Via IDE**: Clique em **Run**
-**Via terminal**:
+6️⃣ Rode a aplicação:
 
 ```bash
 mvn spring-boot:run
 ```
 
-### 6️⃣ Teste a API
-
-Acesse via navegador ou ferramentas como **Postman** ou **Insomnia**:
+7️⃣ Acesse a API em:
 
 ```
 http://localhost:8080
@@ -164,118 +160,89 @@ http://localhost:8080
 
 ---
 
-## 📡 Endpoints da API Mottu Mottion
+# 🌐 **Endpoints da API**
 
-### 🔹 Cargos (`/api/cargo`)
+### 🔐 Autenticação e Segurança
 
-| Método | Endpoint                             | Descrição                                     |
-|--------|--------------------------------------|-----------------------------------------------|
-| POST   | `/api/cargo`                         | Cadastrar novo cargo                          |
-| GET    | `/api/cargo`                         | Listar todos os cargos (paginado)             |
-| GET    | `/api/cargo/{id}`                    | Buscar cargo por ID                           |
-| GET    | `/api/cargo/nome/{nome}`             | Buscar cargo por nome exato                   |
-| GET    | `/api/cargo/busca?nome=...`          | Buscar cargos por parte do nome (paginado)    |
-| GET    | `/api/cargo/funcionario/{idFuncionario}` | Buscar cargo pelo ID do funcionário       |
-| PUT    | `/api/cargo/{id}`                    | Atualizar cargo                               |
-| DELETE | `/api/cargo/{id}`                    | Deletar cargo                                 |
-| GET    | `/api/cargo/prefixo/{prefixo}`       | Buscar cargos por prefixo                     |
+| Método | Rota             | Descrição                            | Autenticação |
+| ------ | ---------------- | ------------------------------------ | ------------ |
+| POST   | `/auth/login`    | Autentica usuário e retorna **JWT**  | ❌            |
+| POST   | `/auth/register` | Cria novo usuário                    | ❌            |
+| GET    | `/auth/logout`   | Invalida o token JWT                 | ✅            |
+| GET    | `/auth/me`       | Retorna dados do usuário autenticado | ✅            |
 
 ---
 
-### 🔹 Clientes (`/api/clientes`)
+### 👤 Clientes
 
-| Método | Endpoint                                         | Descrição                                      |
-|--------|--------------------------------------------------|------------------------------------------------|
-| POST   | `/api/clientes`                                  | Cadastrar novo cliente                         |
-| GET    | `/api/clientes`                                  | Listar todos os clientes (paginado)            |
-| GET    | `/api/clientes/{id}`                             | Buscar cliente por ID                          |
-| GET    | `/api/clientes/cpf/{cpf}`                        | Buscar cliente por CPF                         |
-| GET    | `/api/clientes/email/{email}`                    | Buscar cliente por email                       |
-| GET    | `/api/clientes/telefone/{telefone}`              | Buscar cliente por telefone                    |
-| GET    | `/api/clientes/placa-moto/{placa}`               | Buscar cliente por placa da moto               |
-| GET    | `/api/clientes/{id}/motos`                       | Listar motos por ID do cliente                 |
-| GET    | `/api/clientes/buscar-moto-por-cpf/{cpf}/motos`  | Listar motos por CPF do cliente                |
-| PUT    | `/api/clientes/{id}`                             | Atualizar cliente                              |
-| DELETE | `/api/clientes/{id}`                             | Deletar cliente                                |
+| Método | Rota             | Descrição                         | Autenticação    |
+| ------ | ---------------- | --------------------------------- | --------------- |
+| GET    | `/clientes`      | Lista clientes (paginado)         | ✅               |
+| GET    | `/clientes/{id}` | Detalhes de um cliente específico | ✅               |
+| POST   | `/clientes`      | Cria novo cliente                 | ✅ (ROLE\_ADMIN) |
+| PUT    | `/clientes/{id}` | Atualiza cliente                  | ✅ (ROLE\_ADMIN) |
+| DELETE | `/clientes/{id}` | Remove cliente                    | ✅ (ROLE\_ADMIN) |
 
 ---
 
-### 🔹 Movimentações (`/api/movimentacoes`)
+### 🏍 Motos
 
-| Método | Endpoint                                     | Descrição                                        |
-|--------|----------------------------------------------|--------------------------------------------------|
-| GET    | `/api/movimentacoes`                         | Listar todas as movimentações (paginado)         |
-| GET    | `/api/movimentacoes/{id}`                    | Buscar movimentação por ID                       |
-| GET    | `/api/movimentacoes/por-entrada?dataEntrada=...` | Buscar por data de entrada                 |
-| GET    | `/api/movimentacoes/por-saida?dataSaida=...`     | Buscar por data de saída                   |
-| GET    | `/api/movimentacoes/por-moto?idMoto=...`         | Buscar por ID da moto                      |
-| GET    | `/api/movimentacoes/por-vaga?idVaga=...`         | Buscar por ID da vaga                      |
-| GET    | `/api/movimentacoes/por-descricao?descricao=...` | Buscar por descrição da movimentação       |
-| GET    | `/api/movimentacoes/por-periodo?dataInicio=...&dataFim=...` | Buscar por período de entrada e saída |
+| Método | Rota          | Descrição              | Autenticação    |
+| ------ | ------------- | ---------------------- | --------------- |
+| GET    | `/motos`      | Lista motos (paginado) | ✅               |
+| GET    | `/motos/{id}` | Detalhes de uma moto   | ✅               |
+| POST   | `/motos`      | Cadastra moto          | ✅ (ROLE\_ADMIN) |
+| PUT    | `/motos/{id}` | Atualiza moto          | ✅ (ROLE\_ADMIN) |
+| DELETE | `/motos/{id}` | Remove moto            | ✅ (ROLE\_ADMIN) |
 
 ---
 
-### 🔹 Pátios (`/api/patios`)
+### 🅿 Pátios / Vagas / Movimentação
 
-| Método | Endpoint                                         | Descrição                                      |
-|--------|--------------------------------------------------|------------------------------------------------|
-| GET    | `/api/patios`                                    | Listar todos os pátios                         |
-| GET    | `/api/patios/buscar-por-nome?nome=...`           | Buscar pátios por nome                         |
-| GET    | `/api/patios/buscar-por-localizacao?localizacao=...` | Buscar pátios por localização             |
-| GET    | `/api/patios/{id}/funcionarios`                  | Listar funcionários do pátio                   |
-| GET    | `/api/patios/{id}/gerentes`                      | Listar gerentes do pátio                       |
-| POST   | `/api/patios`                                    | Cadastrar novo pátio                           |
-| PUT    | `/api/patios/{id}`                               | Atualizar pátio                                |
-| DELETE | `/api/patios/{id}`                               | Deletar pátio                                  |
-
----
-
-### 🔹 Setores (`/api/setores`)
-
-| Método | Endpoint             | Descrição              |
-|--------|----------------------|------------------------|
-| GET    | `/api/setores`       | Listar todos os setores|
-| GET    | `/api/setores/{id}`  | Buscar setor por ID    |
-| POST   | `/api/setores`       | Cadastrar novo setor   |
-| PUT    | `/api/setores/{id}`  | Atualizar setor        |
-| DELETE | `/api/setores/{id}`  | Deletar setor          |
+| Método | Rota                     | Descrição                                | Autenticação    |
+| ------ | ------------------------ | ---------------------------------------- | --------------- |
+| GET    | `/patios`                | Lista pátios                             | ✅               |
+| GET    | `/patios/{id}`           | Detalhes de um pátio                     | ✅               |
+| POST   | `/patios`                | Cria pátio                               | ✅ (ROLE\_ADMIN) |
+| GET    | `/vagas`                 | Lista vagas                              | ✅               |
+| POST   | `/vagas`                 | Cria vaga                                | ✅ (ROLE\_ADMIN) |
+| PUT    | `/vagas/{id}/ocupar`     | Marca vaga como ocupada                  | ✅               |
+| PUT    | `/vagas/{id}/liberar`    | Libera vaga                              | ✅               |
+| GET    | `/movimentacoes`         | Lista movimentações (entrada/saída moto) | ✅               |
+| POST   | `/movimentacoes/entrada` | Registra entrada de moto no pátio        | ✅               |
+| POST   | `/movimentacoes/saida`   | Registra saída de moto                   | ✅               |
 
 ---
 
-### 🔹 Vagas (`/api/vagas`)
+### 👨‍💻 Funcionários / Gerentes / Cargos
 
-| Método | Endpoint                                             | Descrição                                 |
-|--------|------------------------------------------------------|-------------------------------------------|
-| GET    | `/api/vagas`                                         | Listar todas as vagas                     |
-| GET    | `/api/vagas/{id}`                                    | Buscar vaga por ID                        |
-| POST   | `/api/vagas`                                         | Cadastrar nova vaga                       |
-| PUT    | `/api/vagas/{id}`                                    | Atualizar vaga                            |
-| DELETE | `/api/vagas/{id}`                                    | Deletar vaga                              |
-| GET    | `/api/vagas/status?status=...`                       | Buscar vagas por status                   |
-| GET    | `/api/vagas/setor/{setorId}`                         | Buscar vagas por setor                    |
-| GET    | `/api/vagas/numero?numero=...`                       | Buscar vaga por número                    |
-| GET    | `/api/vagas/disponivel/{id}`                         | Verificar se vaga está disponível         |
-| GET    | `/api/vagas/contagem?status=...&setorId=...`         | Contar vagas por status e setor           |
+| Método | Rota                 | Descrição            | Autenticação    |
+| ------ | -------------------- | -------------------- | --------------- |
+| GET    | `/funcionarios`      | Lista funcionários   | ✅ (ROLE\_ADMIN) |
+| POST   | `/funcionarios`      | Cria funcionário     | ✅ (ROLE\_ADMIN) |
+| PUT    | `/funcionarios/{id}` | Atualiza funcionário | ✅ (ROLE\_ADMIN) |
+| DELETE | `/funcionarios/{id}` | Remove funcionário   | ✅ (ROLE\_ADMIN) |
+| GET    | `/cargos`            | Lista cargos         | ✅               |
+| POST   | `/cargos`            | Cria cargo           | ✅ (ROLE\_ADMIN) |
+| GET    | `/gerentes`          | Lista gerentes       | ✅ (ROLE\_ADMIN) |
+| POST   | `/gerentes`          | Cria gerente         | ✅ (ROLE\_ADMIN) |
 
 ---
 
-✅ *Todos os endpoints podem exigir autenticação e validação conforme configuração da aplicação.*
+### 🌍 Rotas de Navegação (Thymeleaf)
 
-
-## ⚠️ **Soluções para Problemas Comuns**
-
-* **Banco não conecta**: Verifique usuário, senha e URL no `application.properties`.
-* **Erros de dependência**: Execute `mvn clean install`.
-* **Versão do Java incompatível**: Certifique-se de estar usando Java 17 ou superior.
-
----
-
-## 📚 **Documentação Adicional**
-
-A documentação da API será expandida conforme o desenvolvimento evolui.
+| Rota            | Template            | Descrição              |
+| --------------- | ------------------- | ---------------------- |
+| `/`             | `home.html`         | Página inicial         |
+| `/login`        | `login.html`        | Tela de login          |
+| `/clientes`     | `clientes.html`     | Listagem de clientes   |
+| `/motos`        | `motos.html`        | Listagem de motos      |
+| `/patios`       | `patios.html`       | Gestão de pátios       |
+| `/vagas`        | `vagas.html`        | Gestão de vagas        |
+| `/funcionarios` | `funcionarios.html` | Gestão de funcionários |
 
 ---
 
-🚀 **Bom desenvolvimento!**
+👉 Agora a documentação está **completa, organizada e pronta para apresentação**.
 
----
+Quer que eu monte também um **diagrama visual de arquitetura e entidades + endpoints** para anexar na documentação (fica lindo para apresentação em sala ou reunião)?
