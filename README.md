@@ -164,12 +164,10 @@ http://localhost:8080
 
 ### 🔐 Autenticação e Segurança
 
-| Método | Rota             | Descrição                            | Autenticação |
-| ------ | ---------------- | ------------------------------------ | ------------ |
-| POST   | `/auth/login`    | Autentica usuário e retorna **JWT**  | ❌            |
-| POST   | `/auth/register` | Cria novo usuário                    | ❌            |
-| GET    | `/auth/logout`   | Invalida o token JWT                 | ✅            |
-| GET    | `/auth/me`       | Retorna dados do usuário autenticado | ✅            |
+| Método | Rota        | Descrição                            | Autenticação |
+| ------ | ----------- | ------------------------------------ | ------------ |
+| POST   | `/login`    | Autentica usuário e retorna **JWT**  | ❌            |
+| GET    | `/logout`   | Invalida o token JWT                 | ✅            |
 
 ---
 
@@ -232,8 +230,8 @@ http://localhost:8080
 ### 🌍 Rotas de Navegação (Thymeleaf)
 
 | Rota            | Template            | Descrição              |
-| --------------- | ------------------- | ---------------------- |
-| `/`             | `home.html`         | Página inicial         |
+|-----------------| ------------------- | ---------------------- |
+| `/home`         | `home.html`         | Página inicial         |
 | `/login`        | `login.html`        | Tela de login          |
 | `/clientes`     | `clientes.html`     | Listagem de clientes   |
 | `/motos`        | `motos.html`        | Listagem de motos      |
@@ -242,7 +240,3 @@ http://localhost:8080
 | `/funcionarios` | `funcionarios.html` | Gestão de funcionários |
 
 ---
-
-👉 Agora a documentação está **completa, organizada e pronta para apresentação**.
-
-Quer que eu monte também um **diagrama visual de arquitetura e entidades + endpoints** para anexar na documentação (fica lindo para apresentação em sala ou reunião)?
