@@ -1,5 +1,3 @@
-Perfeito 🚀
-Aqui está a **documentação reorganizada e completa**, já com **MySQL, Flyway, JWT, pacotes, dependências e endpoints**. Assim você já pode usar no seu repositório como um **README.md** bem estruturado.
 
 ---
 
@@ -240,3 +238,4 @@ http://localhost:8080
 | `/funcionarios` | `funcionarios.html` | Gestão de funcionários |
 
 ---
+
