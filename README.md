@@ -1,241 +1,233 @@
 
----
+# Mottu Mottion – Sistema de Monitoramento e Gestão de Pátios
 
-# 🚀 Mottu Mottion: Sistema Inteligente de Gestão de Pátios para Frota de Motos de Entregadores
+## Visão Geral
 
-> Plataforma moderna com API RESTful para controle operacional e logístico das motos da Mottu.
+O **Mottu Mottion** é uma aplicação desenvolvida para apoiar a empresa de aluguel de motos **Mottu** na gestão e monitoramento de sua frota.
+O sistema permite acompanhar em tempo real a movimentação das motos entre os setores dos pátios, utilizando sensores de **Bluetooth** e **GPS** embarcados em microcontroladores **ESP32**.
 
-**Mottu Mottion** é um sistema de gestão de pátios voltado para as motos utilizadas por entregadores parceiros da Mottu.
-Ele organiza o fluxo de entrada e saída, alocação de vagas, tempo de permanência e envia notificações automatizadas.
-A aplicação se comunica via API REST e pode ser acessada por interfaces web ou mobile.
+A plataforma registra a entrada e saída das motos em cada setor, informando automaticamente a quantidade de veículos em cada local, além de possibilitar o gerenciamento de clientes, funcionários, pátios e vagas.
 
----
-
-## 📜 **Visão Geral do Projeto**
-
-O Mottu Mottion surgiu para solucionar um dos principais gargalos operacionais da Mottu: a ausência de um controle padronizado e rastreável nos pátios das mais de 100 filiais.
-Dificuldades em localizar motos, monitorar manutenções e prevenir furtos impactavam diretamente a produtividade e a segurança da operação.
-
-O sistema automatiza e otimiza a movimentação física das motos, proporcionando **visibilidade em tempo real, rastreabilidade total e ações corretivas proativas** — com o apoio de sensores IoT, visão computacional e uma plataforma responsiva.
+O projeto foi implementado em **Java com Spring Boot**, utilizando o padrão **API RESTful** para disponibilizar dados e serviços de forma padronizada e escalável, podendo ser consumido por interfaces web, mobile ou até mesmo sistemas de monitoramento em tempo real.
 
 ---
 
-## 🎯 **Objetivo**
+## Arquitetura da Solução
 
-| Requisito                  | Descrição                                                   |
-| -------------------------- | ----------------------------------------------------------- |
-| 🚚 Cadastro de clientes    | Registro de motociclistas com identificadores únicos.       |
-| 🏍 Cadastro de motos       | Inclusão de dados como placa, chassi, modelo e status.      |
-| 🅿 Gerenciamento de pátios | Controle de setores, vagas e movimentações das motos.       |
-| 👨‍💻 Gestão de equipe     | Atribuição de cargos e controle de funcionários e gerentes. |
+A solução foi estruturada em **camadas bem definidas**, seguindo princípios de **separação de responsabilidades**:
 
----
+```
+Controller → Service → Repository → Model → Database
+```
 
-## 👨‍💻 **Equipe**
-
-* **Giovanna Revito Roz** – RM558981
-* **Kaian Gustavo de Oliveira Nascimento** – RM558986
-* **Lucas Kenji Kikuchi** – RM554424
-
----
-
-## 🧱 **Arquitetura e Estrutura do Projeto**
-
-| Pacote                 | Descrição                                                                                                  |
-| ---------------------- | ---------------------------------------------------------------------------------------------------------- |
-| **controller**         | Controllers REST principais da API (CRUD de clientes, motos, funcionários, etc.).                          |
-| **cors**               | Configurações de **CORS** para permitir acesso entre frontend e backend.                                   |
-| **dto**                | Objetos de Transferência de Dados (DTOs) usados para comunicação entre camadas e validação de entrada.     |
-| **exception**          | Classes de tratamento de exceções customizadas e handlers globais.                                         |
-| **model**              | Entidades de domínio mapeadas com JPA/Hibernate.                                                           |
-| **repository**         | Interfaces `JpaRepository` responsáveis pela persistência e consultas ao banco de dados.                   |
-| **security**           | Configuração de autenticação/autorização com **Spring Security e JWT**.                                    |
-| **service**            | Camada de serviços contendo a lógica de negócio, validações e integrações entre controller e repository.   |
-| **view**               | Controllers voltados para a camada de visualização com **Thymeleaf** (rotas para renderizar páginas HTML). |
-| **Sprint2Application** | Classe principal que inicializa o Spring Boot.                                                             |
-
----
----
-
-## 📦 **Dependências (`pom.xml`)**
-
-| Dependência                      | Finalidade                         |
-| -------------------------------- | ---------------------------------- |
-| `spring-boot-starter-data-jpa`   | Persistência de dados com JPA.     |
-| `spring-boot-starter-web`        | Criação de APIs REST.              |
-| `spring-boot-starter-validation` | Validação de dados.                |
-| `spring-boot-starter-thymeleaf`  | Templates HTML com Thymeleaf.      |
-| `spring-boot-starter-security`   | Segurança com Spring Security.     |
-| `jjwt` / `spring-security-jwt`   | Geração e validação de tokens JWT. |
-| `spring-boot-starter-cache`      | Implementação de cache.            |
-| `mysql-connector-j`              | Integração com banco MySQL.        |
-| `flyway-core`                    | Versionamento do banco.            |
-| `lombok`                         | Redução de código boilerplate.     |
-| `spring-boot-starter-test`       | Testes automatizados.              |
+* **Controller**: disponibiliza endpoints REST para comunicação com o frontend e integrações externas.
+* **Service**: concentra as regras de negócio, validações e orquestração das operações.
+* **Repository**: gerencia a persistência dos dados com **Spring Data JPA**.
+* **Model**: representa as entidades de domínio persistidas no banco de dados.
+* **DTO**: transporte de dados entre camadas, facilitando validações e reduzindo o acoplamento.
+* **Security**: camada de segurança responsável por autenticação, autorização e uso de tokens JWT.
+* **Exception**: centraliza tratamento de erros e respostas padronizadas para falhas.
+* **View**: camada de apresentação com **Thymeleaf**, responsável pelas páginas do sistema.
+* **CORS**: configuração de acesso para permitir que clientes hospedados em diferentes domínios possam consumir a API.
 
 ---
 
-## 🛠 **Configuração do Banco de Dados (MySQL)**
+## Estrutura do Projeto
+
+```
+src/main/java/br/com/fiap/sprint1
+ ├── controller/             # Controladores REST
+ ├── cors/                   # Configurações de CORS
+ ├── dto/                    # Data Transfer Objects
+ ├── exception/              # Tratamento de exceções
+ ├── model/                  # Entidades JPA
+ ├── repository/             # Repositórios Spring Data
+ ├── security/               # Autenticação e autorização (JWT)
+ ├── service/                # Regras de negócio
+ ├── view/                   # Páginas Thymeleaf
+ └── Sprint2Application.java # Classe principal do Spring Boot
+
+src/main/resources
+ ├── db/migration/           # Scripts Flyway para versionamento do banco
+ ├── static.css/             # Arquivos de estilo CSS
+ ├── templates/              # Templates Thymeleaf
+ └── application.properties  # Configurações do sistema
+
+src/test/java                # Testes automatizados (JUnit)
+pom.xml                      # Gerenciamento de dependências (Maven)
+```
+
+---
+
+## Tecnologias Utilizadas
+
+* **Java 17**
+* **Spring Boot 3**
+* **Spring Data JPA**
+* **Spring Security + JWT**
+* **Flyway** (migração de banco de dados)
+* **MySQL 8**
+* **Thymeleaf**
+* **Maven**
+* **Lombok**
+
+---
+
+## API REST vs RESTful
+
+* **API REST**: aplica parcialmente os princípios da arquitetura REST, podendo não seguir todas as restrições.
+* **API RESTful**: segue de forma estrita os princípios do REST, como:
+
+    * Uso correto dos verbos HTTP (`GET`, `POST`, `PUT`, `DELETE`)
+    * Comunicação sem estado (stateless)
+    * Recursos acessados por URIs
+    * Hypermedia (HATEOAS)
+
+O projeto **Mottu Mottion** foi implementado como uma **API RESTful**.
+
+---
+
+## Segurança e Perfis de Acesso
+
+A segurança é baseada em **Spring Security** com autenticação via **JWT**.
+
+Dois perfis de usuário foram definidos:
+
+* **ROLE\_FUNCIONARIO**
+
+    * Registrar entrada/saída de motos
+    * Consultar motos, clientes e pátios
+
+* **ROLE\_GERENTE**
+
+    * Todos os privilégios do funcionário
+    * Cadastro e gerenciamento de motos, pátios e vagas
+    * Gestão de funcionários e usuários
+
+---
+
+## Exemplos de Endpoints
+
+### Clientes
+
+```http
+GET /api/clientes
+```
+
+```http
+POST /api/clientes
+Content-Type: application/json
+
+{
+  "nome": "João Silva",
+  "cpf": "12345678900",
+  "telefone": "11999999999"
+}
+```
+
+### Motos
+
+```http
+GET /api/motos
+```
+
+```http
+POST /api/motos
+Content-Type: application/json
+
+{
+  "placa": "ABC1234",
+  "modelo": "Honda Biz",
+  "status": "DISPONIVEL"
+}
+```
+
+### Pátios
+
+```http
+GET /api/patios
+```
+
+---
+
+## Configuração do Banco de Dados
 
 Arquivo `application.properties`:
 
 ```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/mottu_mottion?useSSL=false&serverTimezone=UTC
-spring.datasource.username=root
+spring.datasource.username=seuuser
 spring.datasource.password=suasenha
-spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 
 spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
 spring.jpa.hibernate.ddl-auto=validate
 spring.jpa.show-sql=true
 
-# Flyway
 spring.flyway.enabled=true
 spring.flyway.locations=classpath:db/migration
-
-# Cache
-spring.cache.type=simple
-logging.level.org.springframework.cache=DEBUG
 ```
 
 ---
 
-## 📂 **Scripts Flyway**
+## Como Executar o Projeto
 
-Local: `resources/db/migration`
+### Requisitos
 
-* `V1__create_users.sql` → Criação da tabela de usuários
-* `V2__insert_initial_users.sql` → Inserção de dados iniciais
-* `V3__insert_new_users.sql` → Novos registros de usuários
-* `V4__update_role.sql` → Alteração de papéis (roles)
+* Java 17+
+* Maven 3+
+* MySQL 8+
+
+### Passos
+
+1. Clonar o repositório:
+
+   ```bash
+   git clone https://github.com/giovannarevitoroz/Sprint01-Mottu-Motion-Java-Adavanced.git
+   ```
+2. Criar o banco de dados:
+
+   ```sql
+   CREATE DATABASE mottu_mottion;
+   ```
+3. Ajustar credenciais no `application.properties`.
+4. Instalar dependências:
+
+   ```bash
+   mvn install
+   ```
+5. Executar aplicação:
+
+   ```bash
+   mvn spring-boot:run
+   ```
+
+A aplicação ficará disponível em:
+`http://localhost:8080/`
 
 ---
 
-## 🚀 **Guia de Execução**
+## Testes
 
-### 📌 Pré-requisitos
-
-* **Java 17+**
-* **Maven**
-* **MySQL 8+**
-* **IDE** (IntelliJ, Eclipse ou VSCode)
-
-### 🔧 Passos
-
-1️⃣ Clone o repositório:
+Para executar os testes automatizados:
 
 ```bash
-git clone https://github.com/giovannarevitoroz/Sprint01-Mottu-Motion-Java-Adavanced.git
-```
-
-2️⃣ Crie o banco no MySQL:
-
-```sql
-CREATE DATABASE mottu_mottion;
-```
-
-3️⃣ Ajuste o `application.properties` com suas credenciais.
-
-4️⃣ Execute o Flyway (migrações rodam automaticamente na inicialização).
-
-5️⃣ Instale as dependências:
-
-```bash
-mvn install
-```
-
-6️⃣ Rode a aplicação:
-
-```bash
-mvn spring-boot:run
-```
-
-7️⃣ Acesse a API em:
-
-```
-http://localhost:8080
+mvn test
 ```
 
 ---
 
-# 🌐 **Endpoints da API**
+## Roadmap Futuro
 
-### 🔐 Autenticação e Segurança
-
-| Método | Rota        | Descrição                            | Autenticação |
-| ------ | ----------- | ------------------------------------ | ------------ |
-| POST   | `/login`    | Autentica usuário e retorna **JWT**  | ❌            |
-| GET    | `/logout`   | Invalida o token JWT                 | ✅            |
+* Integração com aplicação mobile para clientes e funcionários
+* Dashboard em tempo real com Node-RED
+* Relatórios detalhados em PDF e Excel
+* Expansão para monitoramento via IoT em escala
 
 ---
 
-### 👤 Clientes
+## Authors
 
-| Método | Rota             | Descrição                         | Autenticação    |
-| ------ | ---------------- | --------------------------------- | --------------- |
-| GET    | `/clientes`      | Lista clientes (paginado)         | ✅               |
-| GET    | `/clientes/{id}` | Detalhes de um cliente específico | ✅               |
-| POST   | `/clientes`      | Cria novo cliente                 | ✅ (ROLE\_ADMIN) |
-| PUT    | `/clientes/{id}` | Atualiza cliente                  | ✅ (ROLE\_ADMIN) |
-| DELETE | `/clientes/{id}` | Remove cliente                    | ✅ (ROLE\_ADMIN) |
-
----
-
-### 🏍 Motos
-
-| Método | Rota          | Descrição              | Autenticação    |
-| ------ | ------------- | ---------------------- | --------------- |
-| GET    | `/motos`      | Lista motos (paginado) | ✅               |
-| GET    | `/motos/{id}` | Detalhes de uma moto   | ✅               |
-| POST   | `/motos`      | Cadastra moto          | ✅ (ROLE\_ADMIN) |
-| PUT    | `/motos/{id}` | Atualiza moto          | ✅ (ROLE\_ADMIN) |
-| DELETE | `/motos/{id}` | Remove moto            | ✅ (ROLE\_ADMIN) |
-
----
-
-### 🅿 Pátios / Vagas / Movimentação
-
-| Método | Rota                     | Descrição                                | Autenticação    |
-| ------ | ------------------------ | ---------------------------------------- | --------------- |
-| GET    | `/patios`                | Lista pátios                             | ✅               |
-| GET    | `/patios/{id}`           | Detalhes de um pátio                     | ✅               |
-| POST   | `/patios`                | Cria pátio                               | ✅ (ROLE\_ADMIN) |
-| GET    | `/vagas`                 | Lista vagas                              | ✅               |
-| POST   | `/vagas`                 | Cria vaga                                | ✅ (ROLE\_ADMIN) |
-| PUT    | `/vagas/{id}/ocupar`     | Marca vaga como ocupada                  | ✅               |
-| PUT    | `/vagas/{id}/liberar`    | Libera vaga                              | ✅               |
-| GET    | `/movimentacoes`         | Lista movimentações (entrada/saída moto) | ✅               |
-| POST   | `/movimentacoes/entrada` | Registra entrada de moto no pátio        | ✅               |
-| POST   | `/movimentacoes/saida`   | Registra saída de moto                   | ✅               |
-
----
-
-### 👨‍💻 Funcionários / Gerentes / Cargos
-
-| Método | Rota                 | Descrição            | Autenticação    |
-| ------ | -------------------- | -------------------- | --------------- |
-| GET    | `/funcionarios`      | Lista funcionários   | ✅ (ROLE\_ADMIN) |
-| POST   | `/funcionarios`      | Cria funcionário     | ✅ (ROLE\_ADMIN) |
-| PUT    | `/funcionarios/{id}` | Atualiza funcionário | ✅ (ROLE\_ADMIN) |
-| DELETE | `/funcionarios/{id}` | Remove funcionário   | ✅ (ROLE\_ADMIN) |
-| GET    | `/cargos`            | Lista cargos         | ✅               |
-| POST   | `/cargos`            | Cria cargo           | ✅ (ROLE\_ADMIN) |
-| GET    | `/gerentes`          | Lista gerentes       | ✅ (ROLE\_ADMIN) |
-| POST   | `/gerentes`          | Cria gerente         | ✅ (ROLE\_ADMIN) |
-
----
-
-### 🌍 Rotas de Navegação (Thymeleaf)
-
-| Rota            | Template            | Descrição              |
-|-----------------| ------------------- | ---------------------- |
-| `/home`         | `home.html`         | Página inicial         |
-| `/login`        | `login.html`        | Tela de login          |
-| `/clientes`     | `clientes.html`     | Listagem de clientes   |
-| `/motos`        | `motos.html`        | Listagem de motos      |
-| `/patios`       | `patios.html`       | Gestão de pátios       |
-| `/vagas`        | `vagas.html`        | Gestão de vagas        |
-| `/funcionarios` | `funcionarios.html` | Gestão de funcionários |
-
----
+* Giovanna Revito Roz – RM558981
+* Kaian Gustavo de Oliveira Nascimento – RM558986
+* Lucas Kenji Kikuchi – RM554424
 
