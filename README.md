@@ -1,5 +1,5 @@
-
-# Mottu Mottion – Sistema de Monitoramento e Gestão de Pátios
+# Em parceria com a Mottu, apresentamos: 
+# Mottu Mottion um Sistema de Monitoramento e Gestão de Pátios para a Mottu
 
 ## Visão Geral
 
@@ -230,4 +230,5 @@ mvn test
 * Giovanna Revito Roz – RM558981
 * Kaian Gustavo de Oliveira Nascimento – RM558986
 * Lucas Kenji Kikuchi – RM554424
+
 
