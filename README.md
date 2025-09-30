@@ -1,6 +1,9 @@
 # Em parceria com a Mottu, apresentamos: 
 # Mottu Mottion um Sistema de Monitoramento e Gestão de Pátios para a Mottu
 
+#Vídeo demonstracao do projeto 
+## https://youtu.be/TK6COIAQVmg
+
 ## Visão Geral
 
 O **Mottu Mottion** é uma aplicação desenvolvida para apoiar a empresa de aluguel de motos **Mottu** na gestão e monitoramento de sua frota.
@@ -12,6 +15,73 @@ O projeto foi implementado em **Java com Spring Boot**, utilizando o padrão **A
 
 ---
 
+## Migração de Banco com Flyway
+
+O projeto utiliza **Flyway** para versionamento e migração automática do banco de dados.
+
+### Como funciona:
+
+* Todos os scripts SQL devem ser adicionados na pasta:
+
+```
+src/main/resources/db/migration
+```
+
+* O Flyway aplicará automaticamente os scripts ao iniciar a aplicação.
+  Isso garante que o banco esteja sempre atualizado com a versão correta das tabelas e dados iniciais.
+
+* Exemplo de script de inserção de usuários:
+
+```sql
+INSERT INTO USUARIO (username, password, role)
+VALUES 
+('kgonascimento', '$2a$10$9j7OWhYxUJS3lzehf9tbyuBCTsPJmZYIXRuH.z0.a8Iw5wDvtJkPC', 'ROLE_FUNCIONARIO'),
+('admin', '$2a$10$GDnclieRR2G76y06Em4PoexO4xm.08cRMB0TJe1jIFgXLIS3xiO8.', 'ROLE_GERENTE');
+```
+
+> Senhas estão criptografadas com **BCrypt**.
+
+---
+
+## Rotas Protegidas
+
+A aplicação possui **controle de acesso baseado em perfis de usuário**:
+
+### Perfis
+
+| Perfil           | Descrição                                         |
+| ---------------- | ------------------------------------------------- |
+| ROLE_FUNCIONARIO | Acesso a operações básicas de registro e consulta |
+| ROLE_GERENTE     | Todos os privilégios, incluindo gerenciamento     |
+
+### Endpoints públicos
+
+* `/login` – página de login
+* `/error` – página de erro
+* `/css/**`, `/js/**`, `/webjars/**` – recursos estáticos
+
+### Endpoints para **FUNCIONÁRIO e GERENTE**
+
+| Endpoint            | Operação                           |
+| ------------------- | ---------------------------------- |
+| `/clientes/**`      | Consultar e cadastrar clientes     |
+| `/motos/**`         | Consultar e cadastrar motos        |
+| `/movimentacoes/**` | Registrar entradas/saídas de motos |
+
+### Endpoints apenas para **GERENTE**
+
+| Endpoint           | Operação                                 |
+| ------------------ | ---------------------------------------- |
+| `/funcionarios/**` | Gerenciar funcionários                   |
+| `/cargos/**`       | Gerenciar cargos                         |
+| `/patios/**`       | Gerenciar pátios                         |
+| `/setores/**`      | Gerenciar setores dos pátios             |
+| `/vagas/**`        | Gerenciar vagas                          |
+| `/gerentes/**`     | Gerenciar usuários com perfil de gerente |
+
+> Qualquer outra requisição exige autenticação.
+
+---
 ## Arquitetura da Solução
 
 A solução foi estruturada em **camadas bem definidas**, seguindo princípios de **separação de responsabilidades**:
@@ -230,6 +300,7 @@ mvn test
 * Giovanna Revito Roz – RM558981
 * Kaian Gustavo de Oliveira Nascimento – RM558986
 * Lucas Kenji Kikuchi – RM554424
+
 
 
 
