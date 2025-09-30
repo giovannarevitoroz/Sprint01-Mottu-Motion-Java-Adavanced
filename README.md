@@ -202,7 +202,7 @@ spring.flyway.locations=classpath:db/migration
    ```
 
 A aplicação ficará disponível em:
-`http://localhost:8080/`
+`[http://localhost:8080/](http://localhost:8080/login)`
 
 ---
 
@@ -230,5 +230,6 @@ mvn test
 * Giovanna Revito Roz – RM558981
 * Kaian Gustavo de Oliveira Nascimento – RM558986
 * Lucas Kenji Kikuchi – RM554424
+
 
 
