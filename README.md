@@ -1,8 +1,8 @@
 # Em parceria com a Mottu, apresentamos: 
 # Mottu Mottion um Sistema de Monitoramento e Gestão de Pátios para a Mottu
 
-#Vídeo demonstracao do projeto 
-## https://youtu.be/TK6COIAQVmg
+# Vídeo demonstracao do projeto 
+## [https://youtu.be/TK6COIAQVmg](https://youtu.be/yVxPjS8rAtA)
 
 ## Visão Geral
 
@@ -300,6 +300,7 @@ mvn test
 * Giovanna Revito Roz – RM558981
 * Kaian Gustavo de Oliveira Nascimento – RM558986
 * Lucas Kenji Kikuchi – RM554424
+
 
 
 
